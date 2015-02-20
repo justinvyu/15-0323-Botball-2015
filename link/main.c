@@ -2,13 +2,8 @@
 #include <math.h>
 
 #include "constants.h"
-#include "link_routines.h"
 #include "drive.h"
-
-#define forward_with_speed(m1, m2, time, speed) motor(m1,speed);motor(m2,speed);msleep(time)
-#define back_with_speed(m1, m2, time, speed) motor(m1,-speed);motor(m2,-speed);msleep(time)
-
-#define fd_with_time(m1, m2, time) fd(m1);fd(m2);msleep(time);
+#include "link_routines.h"
 
 void drive_to_pole()
 {
@@ -37,10 +32,9 @@ int main(int argc, char** args)
 	}
 	*/
 	
-	//forward_with_speed(MOT_LEFT, MOT_RIGHT, 6000, 80);
+	// Drive Test
 	
-	//back_with_speed(MOT_LEFT, MOT_RIGHT, 6000, 100);
-	
+	/*
 	set_a_button_text("Forward");
 	set_b_button_text("Backward");
 	
@@ -54,5 +48,9 @@ int main(int argc, char** args)
 			back_with_speed(MOT_LEFT, MOT_RIGHT, 6000, 500);
 		}
 	}
+	*/
 	
+	enable_servo(PROP_SERVO);
+	tunnel();
+
 }

@@ -5,5 +5,6 @@
 #define _LINK_ROUTINES_H_
 
 void ping(int drive_port_1, int drive_port_2);
+void tunnel();
 
 #endif
