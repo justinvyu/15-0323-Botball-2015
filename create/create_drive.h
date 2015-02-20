@@ -141,11 +141,9 @@ void create_send(){
 	
 }
 void create_recieve(){
-	
 	char buffer[1];
 	char *bptr = buffer;
 	create_read_block(bptr,1);
-	
 }
 
 // blocks program until create finishes

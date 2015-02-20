@@ -38,7 +38,14 @@ int main(int argc, char** args)
 	printf("I am Reksai, the Void Burrower\n");
 	
 	initialize();
-
+	
+	w();
+	e();
+	left(ks/2, 90);
+	backward(15);
+	forward(10);
+	right(ks/2, 90);
+	
 	drive_to_pole();
 	ping();
 }

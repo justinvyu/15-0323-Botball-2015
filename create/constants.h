@@ -9,7 +9,7 @@
 
 #pragma mark - Servos
 
-#define GATE_SERVO 3
+#define GATE_SERVO 2
 #define GATE_CLOSED 1120
 #define GATE_OPEN 2047
 
