@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "constants.h"
-#include "drive.h"
+#define MAIN
+
 #include "link_routines.h"
 
 void drive_to_pole()
@@ -10,54 +10,50 @@ void drive_to_pole()
 	// Add touch sensor stuff after Charlie is done modifying it
 	motor(MOT_LEFT, 80);
 	motor(MOT_RIGHT, 80);
-	msleep(6000);	
+	msleep(4000);	
 }
 
 void w()
 {
-	printf("I am the Void Burrower");
+	printf("Burrowed");
 }
+
+void initialize()
+{
+	enable_servo(ARM_SERVO);
+	enable_servo(PROP_SERVO);
+	ssp(ARM_SERVO, ARM_DOWN);
+	ssp(PROP_SERVO, PROP_UP);
+	
+	set_analog_pullup(ET, 0); //disable pullup in order to get accurate ET values
+	
+}
+
+#ifdef MAIN
 
 int main(int argc, char** args) 
 {
-	/*
-	enable_servo(ARM_SERVO);
-	ssp(ARM_SERVO, 0);
+	printf("brrrrr, brrrrr, prrrrr\n");
+	int i;for(i=0;i<3;i++){beep();}
+	printf("I am Reksai, the Void Burrower\n");
 	
+	initialize();
+
 	drive_to_pole();
-	ping(0, 1);
-	*/
-	
-	/*
-	set_analog_pullup(ET, 0); //disable pullup in order to get accurate ET values
-	while(!side_button())
-	{
-		printf("%d\n", analog10(ET));
-		msleep(1000);
-	}
-	*/
-	
-	// Drive Test
-	
-	/*
-	set_a_button_text("Forward");
-	set_b_button_text("Backward");
-	
-	while(!side_button()) {
-		if(a_button()) {
-			printf("forward");
-			fd_with_time(MOT_LEFT, MOT_RIGHT, 6000);
-		}
-		if(b_button()) {
-			printf("backward");
-			back_with_speed(MOT_LEFT, MOT_RIGHT, 6000, 500);
-		}
-	}
-	*/
-	
-	enable_servo(PROP_SERVO);
+	ping();
+}
+
+#endif
+
+#ifdef TEST
+
+int main()
+{
 	w();
 	e();
+	backward(10);
 	e();
-
+	return 0;
 }
+
+#endif

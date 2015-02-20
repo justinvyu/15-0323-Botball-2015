@@ -17,6 +17,8 @@
 #define PROP_DOWN 2047
 
 #define ARM_SERVO 1 
+#define ARM_UP 2047
+#define ARM_DOWN 0
 
 #pragma mark - Shortcuts
 
