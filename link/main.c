@@ -13,6 +13,11 @@ void drive_to_pole()
 	msleep(6000);	
 }
 
+void w()
+{
+	printf("I am the Void Burrower");
+}
+
 int main(int argc, char** args) 
 {
 	/*
@@ -51,6 +56,8 @@ int main(int argc, char** args)
 	*/
 	
 	enable_servo(PROP_SERVO);
-	tunnel();
+	w();
+	e();
+	e();
 
 }
