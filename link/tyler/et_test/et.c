@@ -1,11 +1,9 @@
-#include "../../constants.h"
-#include "../../drive.h"
-#include "../../link_routines.h"
+#include "link/constants.h"
 
 void move_until_et(float threshold)
 {
-        motor(MOT_LEFT, SPD);
-        motor(MOT_RIGHT, SPD);
+        motor(MOT_LEFT, 100);
+        motor(MOT_RIGHT, 100);
         set_analog_pullup(ET, 0);
         while(1)
         {
