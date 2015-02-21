@@ -7,6 +7,7 @@ void move_until_et(float threshold)
         set_analog_pullup(ET, 0);
         while(1)
         {
+				printf("%d", analog10(ET));
                 if(analog10(ET) <= threshold)
                 {
                         break;
@@ -18,5 +19,5 @@ void move_until_et(float threshold)
 
 int main()
 {
-        move_until_et(100);
+        move_until_et(400);
 }
