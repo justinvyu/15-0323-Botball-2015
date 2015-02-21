@@ -1,6 +1,6 @@
 #include "../constants.h"
 #include "../drive.h"
-#include "link_routines.h"
+#include "../link_routines.h"
 
 void move_until_et(float threshold)
 {
@@ -16,4 +16,9 @@ void move_until_et(float threshold)
                 msleep(50);
         }
         ao();
+}
+
+int main()
+{
+        move_until_et(100);
 }
