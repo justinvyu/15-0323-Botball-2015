@@ -7,7 +7,7 @@ void move_until_et(float threshold)
         motor(MOT_LEFT, SPD);
         motor(MOT_RIGHT, SPD);
         set_analog_pullup(ET, 0);
-        while(true)
+        while(1)
         {
                 if(analog10(ET) <= threshold)
                 {
