@@ -5,16 +5,15 @@
 
 int main()
 {
-        create_connect();
         while(true)
         {
-            create_drive_direct(100, 100);
-            msleep(100);
-            if(analog(ET) <= 100)
-            {
-                    break;
-            }
+                if(analog(ET) <= 100)
+                {
+                        break;
+                } else {
+                        forward(5);
+                }
+                msleep(50);
         }
-        create_stop();
-        create_disconnect();
+        ao();
 }
