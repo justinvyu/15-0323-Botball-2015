@@ -8,9 +8,9 @@
 void drive_to_pole()
 {
 	// Add touch sensor stuff after Charlie is done modifying it
-	motor(MOT_LEFT, 80);
-	motor(MOT_RIGHT, 80);
-	msleep(4000);	
+	motor(MOT_LEFT, 40);
+	motor(MOT_RIGHT, 40);
+	msleep(6000);	
 }
 
 void w()
@@ -59,7 +59,12 @@ int main()
 	initialize();
 	w();
 	e();
+	
 	backward(10);
+	
+	right(ks/2, 50);
+	drive_to_pole();
+	ping();
 	return 0;
 }
 
