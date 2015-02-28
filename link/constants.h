@@ -11,12 +11,11 @@
 
 #pragma mark - Servos
 
-#define PROP_SERVO 0
-#define PROP_FLAT 1024
-#define PROP_UP 0
-#define PROP_DOWN 2047
+#define PROP_SERVO 3
+#define PROP_UP 1000
+#define PROP_DOWN 1900
 
-#define ARM_SERVO 1 
+#define ARM_SERVO 0 
 #define ARM_UP 2047
 #define ARM_DOWN 0
 

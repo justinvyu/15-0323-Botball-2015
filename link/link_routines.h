@@ -66,16 +66,18 @@ void ping()
  */
 void e()
 {
-	bk_with_time(MOT_LEFT, MOT_RIGHT, 2000);
-	printf("done driving");
-	ssp(PROP_SERVO, PROP_DOWN);
-	msleep(1000);
-	printf("put servo down");
-	bk_with_time(MOT_LEFT, MOT_RIGHT, 1000);
 	ssp(PROP_SERVO, PROP_UP);
-	msleep(1000);
-	printf("lifted servo");
-	bk_with_time(MOT_LEFT, MOT_RIGHT, 2000);
+	msleep(500);
+	//forward(10);
+	fd_with_time(MOT_LEFT, MOT_RIGHT, 1000);
+	ssp(PROP_SERVO, PROP_DOWN);
+	msleep(500);
+	fd_with_time(MOT_LEFT, MOT_RIGHT, 500);
+	ssp(PROP_SERVO, PROP_UP);
+ 	//forward(20);
+	msleep(500);
+	//forward(10);
+	fd_with_time(MOT_LEFT, MOT_RIGHT, 1000);
 }
 
 void square_on_line()

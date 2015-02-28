@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MAIN
+#define TEST
 
 #include "link_routines.h"
 
@@ -56,10 +56,10 @@ int main(int argc, char** args)
 
 int main()
 {
+	initialize();
 	w();
 	e();
 	backward(10);
-	e();
 	return 0;
 }
 
