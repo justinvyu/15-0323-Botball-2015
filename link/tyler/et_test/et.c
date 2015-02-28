@@ -1,6 +1,4 @@
-#include "link/constants.h"
-
-void move_until_et(float threshold)
+void move_until_et(float threshold) // threshold is 400 (usually)
 {
         motor(MOT_LEFT, 100);
         motor(MOT_RIGHT, 100);
@@ -14,9 +12,4 @@ void move_until_et(float threshold)
                 msleep(50);
         }
         ao();
-}
-
-int main()
-{
-        move_until_et(400);
 }
