@@ -4,11 +4,10 @@ void move_until_et(float threshold)
 {
         motor(MOT_LEFT, 100);
         motor(MOT_RIGHT, 100);
-        set_analog_pullup(ET, 0);
         while(1)
         {
-				printf("%d", analog10(ET));
-                if(analog10(ET) <= threshold)
+				//printf("ET: %d\n", analog_et(ET));
+                if(analog_et(ET) >= threshold)
                 {
                         break;
                 }
