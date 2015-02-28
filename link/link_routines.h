@@ -9,6 +9,25 @@
 
 //SERVOS
 //servo_off(int) is replaced with the KIPR library function disable_servo(int)
+
+void move_until_et(float threshold)
+{
+        motor(MOT_LEFT, 100);
+        motor(MOT_RIGHT, 100);
+        set_analog_pullup(ET, 0);
+        while(1)
+        {
+				printf("%d", analog10(ET));
+                if(analog10(ET) <= threshold)
+                {
+                        break;
+                }
+                msleep(50);
+        }
+        ao();
+}
+
+
 void servo_set(int port,int end,float time)//,float increment)
 {//position is from 0-2047
 	float increment = .01;
