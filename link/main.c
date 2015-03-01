@@ -1,16 +1,14 @@
 #include <stdio.h>
 #include <math.h>
 
-#define TEST
-
 #include "link_routines.h"
 
 void drive_to_pole()
 {
 	// Add touch sensor stuff after Charlie is done modifying it
-	motor(MOT_LEFT, 80);
-	motor(MOT_RIGHT, 80);
-	msleep(4000);	
+	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, 60);
+	msleep(6000);	
 }
 
 void w()
@@ -29,38 +27,25 @@ void initialize()
 	
 }
 
-#ifdef MAIN
-
-int main(int argc, char** args) 
-{
+int main() {
+	
 	printf("brrrrr, brrrrr, prrrrr\n");
 	int i;for(i=0;i<3;i++){beep();}
 	printf("I am Reksai, the Void Burrower\n");
 	
 	initialize();
+
 	
+	right(360, 0);
+
+	/*
 	w();
 	e();
-	left(ks/2, 90);
-	backward(15);
-	forward(10);
-	right(ks/2, 90);
 	
+	backward(10);
+	
+	right(ks/2, 70);
 	drive_to_pole();
 	ping();
+	*/
 }
-
-#endif
-
-#ifdef TEST
-
-int main()
-{
-	initialize();
-	w();
-	e();
-	backward(10);
-	return 0;
-}
-
-#endif
