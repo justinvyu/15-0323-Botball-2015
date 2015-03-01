@@ -32,5 +32,7 @@
 #define TOUCH_SENSOR_LEFT 15
 #define TOUCH_SENSOR_RIGHT 16
 #define ET 0
-
+#define TOP_HAT_LEFT 1
+#define TOP_HAT_RIGHT 2
+#define DARKNESS_THRESHOLD 800
 #endif

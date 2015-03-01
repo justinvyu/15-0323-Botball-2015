@@ -98,7 +98,24 @@ void e()
 
 void square_on_line()
 {
-
+        while(analog(TOP_HAT_RIGHT) <= DARKNESS_THRESHOLD && analog(TOP_HAT_LEFT) <= DARKNESS_THRESHOLD) 
+        {
+                ao();
+                if(analog(TOP_HAT_RIGHT) >= DARKNESS_THRESHOLD)
+                {
+                        motor(MOT_LEFT, 100);
+                }
+                else if(analog(TOP_HAT_LEFT) >= DARKNESS_THRESHOLD)
+                {
+                        motor(MOT_RIGHT, 100);
+                }
+                else
+                {
+                        motor(MOT_RIGHT, 100);
+                        motor(MOT_LEFT, 100);
+                }
+                msleep(100);
+        }
 }
 
 
