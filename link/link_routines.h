@@ -98,7 +98,7 @@ void e()
 
 void square_on_line()
 {
-        while(analog(TOP_HAT_RIGHT) <= DARKNESS_THRESHOLD && analog(TOP_HAT_LEFT) <= DARKNESS_THRESHOLD) 
+        while(analog(TOP_HAT_RIGHT) <= DARKNESS_THRESHOLD || analog(TOP_HAT_LEFT) <= DARKNESS_THRESHOLD) 
         {
                 ao();
                 if(analog(TOP_HAT_RIGHT) >= DARKNESS_THRESHOLD)
