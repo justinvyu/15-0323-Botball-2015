@@ -3,16 +3,14 @@
 
 #include "link_routines.h"
 
-void drive_to_pole()
-{
+void drive_to_pole() {
 	// Add touch sensor stuff after Charlie is done modifying it
 	motor(MOT_LEFT, 60);
 	motor(MOT_RIGHT, 60);
 	msleep(3000);	
 }
 
-void initialize()
-{
+void initialize() {
 	enable_servo(ARM_SERVO);
 	enable_servo(PROP_SERVO);
 	ssp(ARM_SERVO, ARM_DOWN);
