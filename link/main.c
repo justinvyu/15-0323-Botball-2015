@@ -8,12 +8,7 @@ void drive_to_pole()
 	// Add touch sensor stuff after Charlie is done modifying it
 	motor(MOT_LEFT, 60);
 	motor(MOT_RIGHT, 60);
-	msleep(6000);	
-}
-
-void w()
-{
-	printf("Burrowed");
+	msleep(3000);	
 }
 
 void initialize()
@@ -34,18 +29,19 @@ int main() {
 	printf("I am Reksai, the Void Burrower\n");
 	
 	initialize();
-
+//	right(360, 0);
 	
-	right(360, 0);
-
-	/*
-	w();
-	e();
+	tunnel();
+	backward(8);
+	// light sensor code, then go baack
+	forward(10);
 	
-	backward(10);
-	
-	right(ks/2, 70);
+	right(50, 0);
 	drive_to_pole();
 	ping();
-	*/
+	
+	right(100, 0);
+	backward(5);
+	drive_to_pole();
+	ping();
 }
