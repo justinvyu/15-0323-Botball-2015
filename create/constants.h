@@ -6,6 +6,7 @@
 
 #pragma mark - Motors
 
+#define ARM_MOTOR 0
 
 #pragma mark - Servos
 
@@ -13,10 +14,12 @@
 #define GATE_CLOSED 1120
 #define GATE_OPEN 2047
 
+#pragma mark - Sensors
+
+#define ARM_STOP_TOUCH_SENSOR 15
+
 #pragma mark - Shortcuts
 
 #define ssp(serv, pos) set_servo_position(serv, pos)
-
-#pragma mark - Sensors
 
 #endif
