@@ -40,8 +40,8 @@ void turn_until_et(char direction, float threshold)
 		
         while(1)
         {
-                //printf("ET: %d", analog_et(ET));
-                if(analog_et(ET) >= threshold)
+                //printf("ET_TURN: %d", analog_et(ET_TURN));
+                if(analog_et(ET_TURN) >= threshold)
                 {
                         break;
                 }
