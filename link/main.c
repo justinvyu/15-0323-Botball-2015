@@ -10,6 +10,32 @@ void drive_to_pole() {
 	msleep(3000);	
 }
 
+void ball_right()
+{
+        right(90, 0);
+        forward(3);
+        backward(3);
+        left(90, 0);
+}
+
+void ball_left()
+{
+        left(90, 0);
+        forward(3);
+        backward(3);
+        right(90, 0);
+}
+
+void get_ping_pong_balls()
+{
+        for(int i = 0; i < 3; i++)
+        {
+                move_until_et(400);
+                ball_right();
+                ball_left();
+        }
+}
+
 void initialize() {
 	enable_servo(ARM_SERVO);
 	enable_servo(PROP_SERVO);
@@ -18,19 +44,10 @@ void initialize() {
 }
 
 int main() {
-	
-	right(360, 0);
-
-	msleep(5000);
-
-	printf("brrrrr, brrrrr, prrrrr\n");
-	int i;for(i=0;i<3;i++){beep();}
-	printf("I am Reksai, the Void Burrower\n");
-	
 	initialize();
 //	right(360, 0);
 	
-	tunnel();
+	/*tunnel();
 	backward(8);
 	// light sensor code, then go baack
 	forward(10);
@@ -47,4 +64,6 @@ int main() {
 	backward(5);
 	drive_to_pole();
 	ping();
+    */
+    get_ping_pong_balls();
 }
