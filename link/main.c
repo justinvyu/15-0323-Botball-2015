@@ -12,24 +12,27 @@ void drive_to_pole() {
 
 void ball_right()
 {
-        right(90, 0);
-        forward(3);
-        backward(3);
-        left(90, 0);
+        //It's 180 because of problems with the right and left subroutine
+        right(180, 0);
+        forward(7);
+        backward(7);
+        left(180, 0);
 }
 
 void ball_left()
 {
-        left(90, 0);
-        forward(3);
-        backward(3);
-        right(90, 0);
+        //It's 180 because of problems with the right and left subroutine
+        left(180, 0);
+        forward(7);
+        backward(7);
+        right(180, 0);
 }
 
 void get_ping_pong_balls()
 {
-        for(int i = 0; i < 3; i++)
+        int i;for(i = 0; i < 3; i++)
         {
+				forward(10);
                 move_until_et(400);
                 ball_right();
                 ball_left();
