@@ -12,14 +12,14 @@ void drive_to_pole() {
 
 void ball_right()
 {
-        right(90, 0);
+        turn_until_et(1, 400);
 		ping();
         left(90, 0);
 }
 
 void ball_left()
 {
-        left(90, 0);
+		turn_until_et(0,400);
 		ping();
         right(90, 0);
 }
@@ -28,7 +28,7 @@ void get_ping_pong_balls()
 {
         int i;for(i = 0; i < 3; i++)
         {
-                forward(20);
+                forward(15);
                 move_until_et(400);
                 ball_right();
                 ball_left();
