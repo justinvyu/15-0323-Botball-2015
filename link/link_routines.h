@@ -60,20 +60,23 @@ void lift_arm()
 	servo_set(ARM_SERVO, 2047, 5);
 }
 
+void lower_arm()
+{
+	servo_set(ARM_SERVO, 0 ,5);
+}
+
 void ping()
 {
 	thread tid;
 	tid = thread_create(lift_arm);
 	thread_start(tid);
-	
-	// Replace with a square on the black line
-	// square_on_line();
-	
 	motor(MOT_LEFT, -20);
 	motor(MOT_RIGHT, -20);
 	msleep(3000);
-	forward(10);
+	forward(15);
 	thread_destroy(tid);
+	lower_arm();
+	backward(15);
 }
 
 /**

@@ -11,7 +11,7 @@
 #define SPDr 1000. 
 #define rdistmult (SPDr/SPDl)
 
-#define ks 14.2//distance from one wheel to another in cm
+#define ks 12.2//distance from one wheel to another in cm
 #define wheeldiameter 3.4 //this is in cm
 
 #define CMtoBEMF (921/wheeldiameter/PI) //921 is how many backemf ticks there are in a full wheel, take the number of units per rotation, divide by circumference
