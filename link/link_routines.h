@@ -29,13 +29,11 @@ void turn_until_et(char direction, float threshold)
 {
         if(direction)
         {
-                motor(MOT_LEFT, 100);
-                motor(MOT_RIGHT, 200);
+                motor(MOT_RIGHT, 100);
         }
         else
         {
-                motor(MOT_LEFT, 200);
-                motor(MOT_RIGHT, 100);
+                motor(MOT_LEFT, 100);
         }
 		
         while(1)
