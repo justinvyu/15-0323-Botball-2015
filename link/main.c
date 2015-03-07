@@ -12,7 +12,6 @@ void drive_to_pole() {
 
 void ball_right()
 {
-        //It's 180 because of problems with the right and left subroutine
         right(90, 0);
 		ping();
         left(90, 0);
@@ -20,7 +19,6 @@ void ball_right()
 
 void ball_left()
 {
-        //It's 180 because of problems with the right and left subroutine
         left(90, 0);
 		ping();
         right(90, 0);
