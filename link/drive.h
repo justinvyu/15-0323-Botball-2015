@@ -8,7 +8,7 @@
 #define PI 3.14159265358979
 #define SPD 1000
 #define SPDl 1000.
-#define SPDr 1000. 
+#define SPDr 1100. 
 #define rdistmult (SPDr/SPDl)
 
 #define ks 12.2//distance from one wheel to another in cm

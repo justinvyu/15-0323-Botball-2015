@@ -34,7 +34,7 @@
 #define ET 0
 #define ET_TURN 1
 
-#define TOP_HAT_LEFT 1
-#define TOP_HAT_RIGHT 2
+#define TOP_HAT_LEFT 2
+#define TOP_HAT_RIGHT 3
 #define DARKNESS_THRESHOLD 800
 #endif
