@@ -95,18 +95,42 @@ void lower_arm()
 	servo_set(ARM_SERVO, 0 ,5);
 }
 
+void drive_to_pole() {
+	// Add touch sensor stuff after Charlie is done modifying it
+	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, 60);
+	msleep(3000);
+}
+
+/**
+ * 	Get a ping pong ball from any of the heights.å
+ */
 void ping()
 {
 	thread tid;
 	tid = thread_create(lift_arm);
 	thread_start(tid);
-	motor(MOT_LEFT, -20);
-	motor(MOT_RIGHT, -20);
-	msleep(3000);
+	motor(MOT_LEFT, -30);
+	motor(MOT_RIGHT, -30);
+	msleep(3500);
 	forward(15);
 	thread_destroy(tid);
 	lower_arm();
 	backward(15);
+}
+
+void ball_right()
+{
+	//turn_until_et(1, 100);
+	ping();
+	left(90, 0);
+}
+
+void ball_left()
+{
+	//turn_until_et(0,100);
+	ping();
+	right(90, 0);
 }
 
 /**
@@ -120,12 +144,24 @@ void tunnel()
 	fd_with_time(MOT_LEFT, MOT_RIGHT, 2000);
 	ssp(PROP_SERVO, PROP_DOWN);
 	msleep(500);
-	fd_with_time(MOT_LEFT, MOT_RIGHT, 2500);
+	fd_with_time(MOT_LEFT, MOT_RIGHT, 2000);
+	ao();
+	ssp(PROP_SERVO, PROP_DOWN);
+	msleep(300);
+	ssp(PROP_SERVO, PROP_UP);
+	msleep(300);
+	forward_with_speed(MOT_LEFT, MOT_RIGHT, 500, 50);
+	ao();
+	ssp(PROP_SERVO, PROP_DOWN);
+	msleep(500);
 	ssp(PROP_SERVO, PROP_UP);
 	msleep(500);
-	fd_with_time(MOT_LEFT, MOT_RIGHT, 500);
 }
 
+
+/**
+ *		When perpendicular to a black line, square up on it.
+ */
 void square_on_line()
 {
 	while(analog(TOP_HAT_RIGHT) <= DARKNESS_THRESHOLD || analog(TOP_HAT_LEFT) <= DARKNESS_THRESHOLD) 
@@ -150,5 +186,71 @@ void square_on_line()
 	ao();
 }
 
+/**
+ * 	Drive along the middle black line and collect the golden poms.
+ */
+void drive_line()
+{
+	clear_motor_position_counter(MOT_LEFT);
+	clear_motor_position_counter(MOT_RIGHT);
+	
+	while(get_motor_position_counter(MOT_LEFT)-100 < 19000 && get_motor_position_counter(MOT_RIGHT)-100 < 19000)
+	{
+				
+		if(analog10(TOP_HAT_RIGHT) <= DARKNESS_THRESHOLD && analog10(TOP_HAT_LEFT) <= DARKNESS_THRESHOLD) 
+		{
+			motor(MOT_LEFT, 100);
+			motor(MOT_RIGHT,100);
+		}
+		else {
+			if(analog10(TOP_HAT_LEFT) >= DARKNESS_THRESHOLD)
+			{
+				printf("LEFT BLACK\n");
+				motor(MOT_RIGHT, 100);
+				motor(MOT_LEFT, 20);
+			}
+			if(analog10(TOP_HAT_RIGHT) >= DARKNESS_THRESHOLD)
+			{
+				printf("RIGHT BLACK\n");
+				motor(MOT_LEFT, 100);
+				motor(MOT_RIGHT, 20);
+			}
+		}
+		msleep(50);
+	}
+}
+
+
+void get_ping_pong_balls()
+{
+	int i;for(i = 0; i < 3; i++)
+	{
+		forward(15);
+		move_until_et(400);
+		ball_right();
+		ball_left();
+	}
+}
+
+void initialize() {
+	enable_servo(ARM_SERVO);
+	enable_servo(PROP_SERVO);
+	ssp(ARM_SERVO, ARM_DOWN);
+	ssp(PROP_SERVO, PROP_UP);
+}
+
+void test_et() {
+	while(1) {
+		printf("%d\n", analog_et(ET_TURN));
+		msleep(500);
+	}
+}
+
+void square_on_wall() {
+	motor(MOT_LEFT, -80);
+	motor(MOT_RIGHT, -80);
+	msleep(3000);
+	ao();
+}
 
 #endif
