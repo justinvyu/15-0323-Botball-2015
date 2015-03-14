@@ -15,7 +15,7 @@
 #define PROP_UP 1000
 #define PROP_DOWN 1900
 
-#define ARM_SERVO 0 
+#define ARM_SERVO 1
 #define ARM_UP 2047
 #define ARM_DOWN 0
 
