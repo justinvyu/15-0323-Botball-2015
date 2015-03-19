@@ -9,14 +9,14 @@
 //SERVOS
 //servo_off(int) is replaced with the KIPR library function disable_servo(int)
 
-void move_until_et(float threshold)
+void move_until_et()
 {
-	motor(MOT_LEFT, 80);
-	motor(MOT_RIGHT, 80);
+	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, 60);
 	while(1)
 	{
 		//printf("ET: %d", analog_et(ET));
-		if(analog_et(ET) >= threshold)
+		if(analog_et(ET) >= ET_THRESHOLD_LEFT)
 		{
 			break;
 		}
@@ -25,34 +25,15 @@ void move_until_et(float threshold)
 	ao();
 }
 
-void right_until_et(float threshold)
-{
-	motor(MOT_LEFT, 100);
-	while(1)
-	{
-		printf("ET_TURN: %d", analog_et(ET_TURN));
-		if(analog_et(ET_TURN) >= threshold)
-		{
-			break;
-		}
+void left_et() {
+	ao();
+	motor(MOT_RIGHT, 60);
+	motor(MOT_LEFT, -20);
+	while(analog_et(ET_TURN) <= ET_THRESHOLD_FRONT) {
+		printf("%d\n", analog_et(ET_TURN));
 		msleep(50);
 	}
-	off(MOT_LEFT);
-}
-
-void left_until_et(float threshold)
-{
-	motor(MOT_RIGHT, 100);
-	while(1)
-	{
-		printf("ET_TURN: %d", analog_et(ET_TURN));
-		if(analog_et(ET_TURN) >= threshold)
-		{
-			break;
-		}
-		msleep(50);
-	}
-	off(MOT_RIGHT);
+	ao();
 }
 
 void servo_set(int port,int end,float time)//,float increment)
@@ -87,19 +68,21 @@ void servo_set(int port,int end,float time)//,float increment)
 
 void lift_arm() 
 {
-	servo_set(ARM_SERVO, 2047, 5);
+	servo_set(ARM_SERVO, ARM_UP, 5);
 }
 
 void lower_arm()
 {
-	servo_set(ARM_SERVO, 0 ,5);
+	ssp(ARM_SERVO, ARM_DOWN);
+	msleep(500);
 }
 
 void drive_to_pole() {
 	// Add touch sensor stuff after Charlie is done modifying it
+	printf("DRIVING TO POLE\n");
 	motor(MOT_LEFT, 60);
 	motor(MOT_RIGHT, 60);
-	msleep(3000);
+	msleep(2000);
 }
 
 /**
@@ -112,11 +95,11 @@ void ping()
 	thread_start(tid);
 	motor(MOT_LEFT, -40);
 	motor(MOT_RIGHT, -40);
-	msleep(3500);
-	forward(10);
+	msleep(2000);
+	drive_to_pole();
 	thread_destroy(tid);
+	backward(5);
 	lower_arm();
-	backward(12);
 }
 
 /**
@@ -135,7 +118,7 @@ void tunnel()
 	msleep(300);
 	ssp(PROP_SERVO, PROP_UP);
 	msleep(300);
-	forward_with_speed(MOT_LEFT, MOT_RIGHT, 500, 50);
+	forward_with_speed(MOT_LEFT, MOT_RIGHT, 500, 60);
 	ao();
 	ssp(PROP_SERVO, PROP_DOWN);
 	msleep(500);
@@ -209,13 +192,6 @@ void initialize() {
 	enable_servo(PROP_SERVO);
 	ssp(ARM_SERVO, ARM_DOWN);
 	ssp(PROP_SERVO, PROP_UP);
-}
-
-void test_et() {
-	while(1) {
-		printf("%d\n", analog_et(ET_TURN));
-		msleep(500);
-	}
 }
 
 void square_on_wall() {

@@ -3,36 +3,49 @@
 
 #include "link_routines.h"
 
+/*
+Checklist
+
+-ET less
+-no servo slow
+- make things slower
+-back less
+
+*/
+
 int main() {	
 	initialize();
 	
+	left_et();
+	
+	/*
 	printf("Getting ping pong balls 2-3\n");
 	int i; 
 	for(i = 0; i < 2; i++) {
-		move_until_et(300);
-		forward(2);
+		move_until_et();
 		left(75, 0);
 		drive_to_pole();
 		ping();
-		left(-75, 0);
-		forward(20);
+		right(90, 0);
+		forward(15);
 	}
 	
 	printf("Move across center\n");
-	move_until_et(300);
-	forward(10);
-	move_until_et(300);
-	forward(10);
+	move_until_et();
+	forward(20);
+	move_until_et();
+	forward(20);
 	
 	printf("Getting ping pong balls 4-5\n");
 	for(i = 0; i < 2; i++) {
-		move_until_et(300);
+		move_until_et();
 		left(75, 0);
 		ping();
 		drive_to_pole();
-		left(-75, 0);
+		right(75, 0);
 		forward(10);
 	}
+	*/
 	
 	/*
 	printf("Getting over the middle...\n");
