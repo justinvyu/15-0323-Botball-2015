@@ -6,10 +6,6 @@
 /*
 Checklist
 
--ET less
--no servo slow
-- make things slower
--back less
 
 */
 
@@ -17,6 +13,7 @@ int main() {
 	initialize();
 	
 	left_et();
+	ping();
 	
 	/*
 	printf("Getting ping pong balls 2-3\n");

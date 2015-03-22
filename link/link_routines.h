@@ -27,13 +27,16 @@ void move_until_et()
 
 void left_et() {
 	ao();
-	motor(MOT_RIGHT, 60);
-	motor(MOT_LEFT, -20);
+	motor(MOT_RIGHT, 80);
+	motor(MOT_LEFT, -80);
 	while(analog_et(ET_TURN) <= ET_THRESHOLD_FRONT) {
 		printf("%d\n", analog_et(ET_TURN));
 		msleep(50);
 	}
 	ao();
+	if(analog_et(ET) <= ET_THRESHOLD_LEFT)
+		move_until_et();
+	return;
 }
 
 void servo_set(int port,int end,float time)//,float increment)
@@ -80,8 +83,8 @@ void lower_arm()
 void drive_to_pole() {
 	// Add touch sensor stuff after Charlie is done modifying it
 	printf("DRIVING TO POLE\n");
-	motor(MOT_LEFT, 60);
-	motor(MOT_RIGHT, 60);
+	motor(MOT_LEFT, 70);
+	motor(MOT_RIGHT, 70);
 	msleep(2000);
 }
 
