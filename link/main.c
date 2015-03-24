@@ -12,8 +12,7 @@ Checklist
 int main() {	
 	initialize();
 	
-	left_et();
-	ping();
+	collect_three_pings();
 	
 	/*
 	printf("Getting ping pong balls 2-3\n");

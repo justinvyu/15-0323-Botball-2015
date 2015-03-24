@@ -11,7 +11,7 @@
 
 #pragma mark - Servos
 
-#define PROP_SERVO 2
+#define PROP_SERVO 1
 #define PROP_UP 1000
 #define PROP_DOWN 1900
 
@@ -34,8 +34,8 @@
 #define ET 0
 #define ET_TURN 1
 
-#define ET_THRESHOLD_LEFT 300 
-#define ET_THRESHOLD_FRONT 375
+#define ET_THRESHOLD_LEFT 280 
+#define ET_THRESHOLD_FRONT 370
 
 #define TOP_HAT_LEFT 2
 #define TOP_HAT_RIGHT 3
