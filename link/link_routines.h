@@ -43,9 +43,9 @@ void servo_set(int port,int end,float time)//,float increment)
 {//position is from 0-2047
 	float increment = .01;
 	//printf("servo %d",port);
-	float curr,start = get_servo_position(port);
+	float start = get_servo_position(port);
 	float i = ((end-start)/time)*increment;
-	curr = start;
+	float curr = start;
 	if (start > end)
 	{
 		while(curr > end)
