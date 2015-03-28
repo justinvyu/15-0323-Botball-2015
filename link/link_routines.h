@@ -9,14 +9,14 @@
 //SERVOS
 //servo_off(int) is replaced with the KIPR library function disable_servo(int)
 
-void move_until_et()
+void move_until_et(int et_port)
 {
 	motor(MOT_LEFT, 60);
 	motor(MOT_RIGHT, 60);
 	while(1)
 	{
 		//printf("ET: %d", analog_et(ET));
-		if(analog_et(ET) >= ET_THRESHOLD_LEFT)
+		if(analog_et(et_port) >= ET_THRESHOLD_LEFT)
 		{
 			break;
 		}
@@ -25,18 +25,26 @@ void move_until_et()
 	ao();
 }
 
-void left_et() {
+void right_et() {
 	ao();
-	motor(MOT_RIGHT, 80);
-	motor(MOT_LEFT, -80);
+	motor(MOT_RIGHT, -80);
+	motor(MOT_LEFT, 80);
 	while(analog_et(ET_TURN) <= ET_THRESHOLD_FRONT) {
 		printf("%d\n", analog_et(ET_TURN));
 		msleep(50);
 	}
 	ao();
-	if(analog_et(ET) <= ET_THRESHOLD_LEFT)
-		move_until_et();
-	return;
+}
+
+void left_et() {
+	ao();
+	motor(MOT_RIGHT, 60);
+	motor(MOT_LEFT, -60);
+	while(analog_et(ET_TURN) <= ET_THRESHOLD_FRONT) {
+		printf("%d\n", analog_et(ET_TURN));
+		msleep(20);
+	}
+	ao();
 }
 
 void servo_set(int port,int end,float time)//,float increment)
@@ -202,6 +210,20 @@ void square_on_wall() {
 	bk(MOT_RIGHT);
 	msleep(3000);
 	ao();
+}
+
+void collect_three_pings() {
+	int i;
+	for(i = 0; i < 2; i++) {
+		move_until_et(ET);
+		backward(5);
+		left(100, ks/2);
+		left_et();
+		msleep(3000);
+		backward(6);
+		right(105, ks/2);
+		forward(10);
+	}
 }
 
 #endif
