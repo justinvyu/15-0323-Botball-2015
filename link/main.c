@@ -9,10 +9,41 @@ Checklist
 
 */
 
+
+
 int main() {	
+	
+	int ET_CALIBRATION = 0;
+
+	while(ET_CALIBRATION == 0) {
+		if (a_button()) {
+			ET_CALIBRATION = calibrate();
+		}
+		msleep(20);
+	}
 	initialize();
 	
-	collect_three_pings();
+	msleep(5000);
+	collect_three_pings(ET_CALIBRATION);
+	
+	/*
+	printf("5 seconds to position\n");
+	msleep(5000);
+	
+	int back_more = 0;
+	if (analog_et(ET) > ET_THRESHOLD_LEFT + 100) {
+			back_more = 1;
+	}
+	clear_motor_position_counter(MOT_RIGHT);
+
+	left(80, ks/2);
+	left_et(ET_CALIBRATION);
+	printf("%d\n", get_motor_position_counter(MOT_RIGHT));
+	
+	if (back_more == 1) {
+		backward(5);
+	}
+	*/
 	
 	/*
 	printf("Getting ping pong balls 2-3\n");
