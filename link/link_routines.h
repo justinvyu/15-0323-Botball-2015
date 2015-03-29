@@ -104,6 +104,9 @@ void drive_to_pole() {
 */
 void ping()
 {
+	backward(3);
+	servo_set(ARM_SERVO, floor(ARM_UP/2), 3);
+	msleep(3000);
 	thread tid;
 	tid = thread_create(lift_arm);
 	thread_start(tid);
@@ -211,13 +214,31 @@ void initialize() {
 void square_on_wall() {
 	bk(MOT_LEFT);
 	bk(MOT_RIGHT);
-	msleep(3000);
+	msleep(2000);
+	ao();
+}
+
+void forward_until_et(int threshold) {
+	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, 60);
+	while (analog_et(ET_TURN) <= threshold) {
+		msleep(20);
+	}
+	ao();
+}
+
+void back_until_et(int threshold) {
+	motor(MOT_LEFT, -60);
+	motor(MOT_RIGHT, -60);
+	while (analog_et(ET_TURN) <= threshold) {
+		msleep(20);
+	}
 	ao();
 }
 
 int calibrate() {
 	int i, sum = 0;
-	for (i = 0; i < 10; i++) {
+	for (i = 0; i < 20; i++) {
 		sum += analog_et(ET_TURN);
 		msleep(10);
 	}
@@ -233,6 +254,15 @@ int calibrate() {
 }
 
 void collect_three_pings(int threshold) {
+	forward_until_et(550);
+	ping();
+	back_with_speed(MOT_LEFT, MOT_RIGHT, 1500, 50);
+	//back_until_et(threshold);
+	motor(MOT_RIGHT, -60);
+	msleep(2500);
+	square_on_wall();
+	ao();
+	msleep(5000);
 	int i, back_more;
 	for(i = 0; i < 2; i++) {
 
@@ -240,6 +270,7 @@ void collect_three_pings(int threshold) {
 		move_until_et(ET);
 		
 		if (analog_et(ET) > ET_THRESHOLD_LEFT + 200) {
+			
 			back_more = 1;
 		}
 		backward(4);
