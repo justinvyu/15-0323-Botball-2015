@@ -16,7 +16,7 @@ void move_until_et(int et_port)
 	while(1)
 	{
 		//printf("ET: %d", analog_et(ET));
-		if(analog_et(et_port) >= ET_THRESHOLD_LEFT)
+		if(analog_et(et_port) >= ET_THRESHOLD_RIGHT)
 		{
 			break;
 		}
@@ -25,24 +25,36 @@ void move_until_et(int et_port)
 	ao();
 }
 
+void right_et(int threshold);
+void left_et(int threshold);
+
 void right_et(int threshold) {
+	clear_motor_position_counter(MOT_LEFT);
+
 	ao();
-	motor(MOT_RIGHT, -50);
-	motor(MOT_LEFT, 50);
+ 	motor(MOT_LEFT, 50);
 	while(analog_et(ET_TURN) <= threshold) {
 		msleep(20);
+		if (get_motor_position_counter(MOT_LEFT) > 200) {
+			msleep(2000);
+			left_et(threshold - 50);
+			return;
+		}
 	}
 	msleep(20);
 	ao();
 }
 
 void left_et(int threshold) {
+	clear_motor_position_counter(MOT_RIGHT);
+	
 	ao();
 	motor(MOT_RIGHT, 50);
 	motor(MOT_LEFT, -50);
 	while(analog_et(ET_TURN) <= threshold) {
 		msleep(20);
-		if (get_motor_position_counter(MOT_RIGHT) > 1550) {
+		if (get_motor_position_counter(MOT_RIGHT) > 200) {
+			msleep(2000);
 			right_et(threshold - 50);
 			return;
 		}
@@ -96,7 +108,7 @@ void drive_to_pole() {
 	printf("DRIVING TO POLE\n");
 	motor(MOT_LEFT, 50);
 	motor(MOT_RIGHT, 50);
-	msleep(1500);
+	msleep(2000);
 }
 
 /**
@@ -104,15 +116,22 @@ void drive_to_pole() {
 */
 void ping()
 {
-	backward(3);
-	servo_set(ARM_SERVO, floor(ARM_UP/2), 3);
-	msleep(3000);
+	servo_set(ARM_SERVO, floor(ARM_UP/3), 3);
+	msleep(1000);
 	thread tid;
 	tid = thread_create(lift_arm);
 	thread_start(tid);
 	motor(MOT_LEFT, -50);
 	motor(MOT_RIGHT, -50);
-	msleep(2000);
+	msleep(500);
+	ao();
+	msleep(500);
+	
+	motor(MOT_LEFT, -50);
+	motor(MOT_RIGHT, -50);
+	msleep(1000);
+	ao();
+	
 	drive_to_pole();
 	thread_destroy(tid);
 	backward(5);
@@ -254,32 +273,34 @@ int calibrate() {
 }
 
 void collect_three_pings(int threshold) {
-	forward_until_et(550);
+	//forward_until_et(500);
+	forward_with_speed(MOT_LEFT, MOT_RIGHT, 800, 50);
 	ping();
-	back_with_speed(MOT_LEFT, MOT_RIGHT, 1500, 50);
+	backward(10);
 	//back_until_et(threshold);
-	motor(MOT_RIGHT, -60);
+	ao();
+	motor(MOT_LEFT, -60);
 	msleep(2500);
 	square_on_wall();
+	forward(15);
 	ao();
 	msleep(5000);
+	
 	int i, back_more;
 	for(i = 0; i < 2; i++) {
 
 		back_more = 0;
 		move_until_et(ET);
-		
-		if (analog_et(ET) > ET_THRESHOLD_LEFT + 200) {
+		forward(4);
+		if (analog_et(ET) > ET_THRESHOLD_RIGHT + 200) {
 			
 			back_more = 1;
 		}
-		backward(4);
-		clear_motor_position_counter(MOT_RIGHT);
 
-		left(80, ks/2);
-		left_et(threshold);
-		drive_to_pole();
-		back_with_speed(MOT_LEFT, MOT_RIGHT, 800, 50);
+		right(85, ks/2);
+		right_et(threshold);
+		forward_until_et(450);
+		//back_with_speed(MOT_LEFT, MOT_RIGHT, 500, 40);
 		ping();
 		msleep(3000);
 		
@@ -288,7 +309,7 @@ void collect_three_pings(int threshold) {
 		}
 			
 		backward(4);
-		right(120, ks/2);
+		left(120, ks/2);
 		forward(10);
 	}
 }

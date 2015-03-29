@@ -9,8 +9,6 @@ Checklist
 
 */
 
-
-
 int main() {	
 	
 	int ET_CALIBRATION = 0;
