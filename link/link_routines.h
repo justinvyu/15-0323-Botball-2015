@@ -28,6 +28,7 @@ void move_until_et(int et_port)
 void right_et(int threshold);
 void left_et(int threshold);
 
+// change if too little 
 void right_et(int threshold) {
 	clear_motor_position_counter(MOT_LEFT);
 
@@ -35,13 +36,15 @@ void right_et(int threshold) {
  	motor(MOT_LEFT, 50);
 	while(analog_et(ET_TURN) <= threshold) {
 		msleep(20);
-		if (get_motor_position_counter(MOT_LEFT) > 200) {
+		printf("%d\n", get_motor_position_counter(MOT_LEFT));
+		if (get_motor_position_counter(MOT_LEFT) > 100) {
 			msleep(2000);
 			left_et(threshold - 50);
-			return;
 		}
 	}
 	msleep(20);
+	backward(8);
+	forward(5);
 	ao();
 }
 
@@ -52,13 +55,16 @@ void left_et(int threshold) {
 	motor(MOT_RIGHT, 50);
 	motor(MOT_LEFT, -50);
 	while(analog_et(ET_TURN) <= threshold) {
-		msleep(20);
+		printf("%d\n", get_motor_position_counter(MOT_RIGHT));
+
 		if (get_motor_position_counter(MOT_RIGHT) > 200) {
 			msleep(2000);
 			right_et(threshold - 50);
-			return;
 		}
+		msleep(5);
 	}
+	backward(8);
+	forward(5);
 	ao();
 }
 
@@ -129,12 +135,12 @@ void ping()
 	
 	motor(MOT_LEFT, -50);
 	motor(MOT_RIGHT, -50);
-	msleep(1000);
+	msleep(500);
 	ao();
 	
 	drive_to_pole();
 	thread_destroy(tid);
-	backward(5);
+	backward(15);
 	lower_arm();
 }
 
@@ -241,7 +247,7 @@ void forward_until_et(int threshold) {
 	motor(MOT_LEFT, 60);
 	motor(MOT_RIGHT, 60);
 	while (analog_et(ET_TURN) <= threshold) {
-		msleep(20);
+		msleep(10);
 	}
 	ao();
 }
@@ -250,7 +256,7 @@ void back_until_et(int threshold) {
 	motor(MOT_LEFT, -60);
 	motor(MOT_RIGHT, -60);
 	while (analog_et(ET_TURN) <= threshold) {
-		msleep(20);
+		msleep(10);
 	}
 	ao();
 }
@@ -261,7 +267,7 @@ int calibrate() {
 		sum += analog_et(ET_TURN);
 		msleep(10);
 	}
-	int average = floor(sum/10);
+	int average = floor(sum/20);
 	if (average > 415) {
 		average = 400;
 	}
@@ -273,14 +279,16 @@ int calibrate() {
 }
 
 void collect_three_pings(int threshold) {
+	printf("ACTUALLY CHANGED 2\n");
 	//forward_until_et(500);
-	forward_with_speed(MOT_LEFT, MOT_RIGHT, 800, 50);
+	forward(5);
 	ping();
-	backward(10);
+	forward(5);
 	//back_until_et(threshold);
 	ao();
 	motor(MOT_LEFT, -60);
-	msleep(2500);
+	motor(MOT_RIGHT, 20);
+	msleep(2000);
 	square_on_wall();
 	forward(15);
 	ao();
@@ -298,6 +306,7 @@ void collect_three_pings(int threshold) {
 		}
 
 		right(85, ks/2);
+		backward(5);
 		right_et(threshold);
 		forward_until_et(450);
 		//back_with_speed(MOT_LEFT, MOT_RIGHT, 500, 40);
@@ -308,7 +317,7 @@ void collect_three_pings(int threshold) {
 			backward(5);
 		}
 			
-		backward(4);
+		backward(12);
 		left(120, ks/2);
 		forward(10);
 	}
