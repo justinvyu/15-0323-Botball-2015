@@ -9,6 +9,18 @@
 //SERVOS
 //servo_off(int) is replaced with the KIPR library function disable_servo(int)
 
+//ET
+int average_et(int et) {
+	int i, sum = 0;
+	for(i = 0; i < 3; i++) {
+		sum += analog_et(et);
+		msleep(5);
+	}
+	int average = floor(sum/3);
+	printf("%d\n", average);
+	return average;
+}
+
 void move_until_et(int et_port)
 {
 	motor(MOT_LEFT, 60);
@@ -16,11 +28,12 @@ void move_until_et(int et_port)
 	while(1)
 	{
 		//printf("ET: %d", analog_et(ET));
-		if(analog_et(et_port) >= ET_THRESHOLD_RIGHT)
+		if(average_et(et_port) >= ET_THRESHOLD_RIGHT)
 		{
 			break;
 		}
-		msleep(50);
+		printf("%d\n", analog_et(et_port));
+		msleep(5);
 	}
 	ao();
 }
@@ -34,15 +47,20 @@ void right_et(int threshold) {
 	printf("RIGHT\n");
  	motor(MOT_LEFT, 50);
 	motor(MOT_RIGHT, -50);
-	while(analog_et(ET_TURN) <= threshold) {
+	while(average_et(ET_TURN) <= threshold) {
 		//printf("%d\n", get_motor_position_counter(MOT_LEFT));
-		if (get_motor_position_counter(MOT_LEFT) > 400) {
+		if (get_motor_position_counter(MOT_LEFT) > 350) {
 			left_et(threshold - 30);
 			return;
 		}
 		msleep(5);
 	}
+	printf("past");
+	motor(MOT_LEFT, 50);
+	motor(MOT_RIGHT, -50);
+	msleep(50);
 	ao();
+	msleep(500);
 	backward(8);
 	forward(5);
 }
@@ -55,13 +73,18 @@ void left_et(int threshold) {
 	while(analog_et(ET_TURN) <= threshold) {
 		//printf("%d\n", get_motor_position_counter(MOT_RIGHT));
 
-		if (get_motor_position_counter(MOT_RIGHT) > 400) {
+		if (get_motor_position_counter(MOT_RIGHT) > 350) {
 			right_et(threshold - 30);
 			return;
 		}
 		msleep(5);
 	}
+	printf("past");
+	motor(MOT_RIGHT, 50);
+	motor(MOT_LEFT, -50);
+	msleep(50);
 	ao();
+	msleep(500);
 	backward(8);
 	forward(5);
 	ao();
@@ -113,7 +136,7 @@ void drive_to_pole() {
 	printf("DRIVING TO POLE\n");
 	motor(MOT_LEFT, 50);
 	motor(MOT_RIGHT, 50);
-	msleep(2500);
+	msleep(2100);
 }
 
 /**
@@ -121,7 +144,7 @@ void drive_to_pole() {
 */
 void ping()
 {
-	servo_set(ARM_SERVO, floor(ARM_UP/3), 3);
+	servo_set(ARM_SERVO, floor(ARM_UP/4), 3);
 	msleep(1000);
 	thread tid;
 	tid = thread_create(lift_arm);
@@ -134,12 +157,12 @@ void ping()
 	
 	motor(MOT_LEFT, -40);
 	motor(MOT_RIGHT, -40);
-	msleep(300);
+	msleep(800);
 	ao();
 	
 	drive_to_pole();
 	thread_destroy(tid);
-	backward(25);
+	back_with_speed(MOT_LEFT, MOT_RIGHT, 2400, 50);
 	lower_arm();
 	forward(4);
 }
@@ -281,43 +304,33 @@ int calibrate() {
 void collect_three_pings(int threshold) {
 	printf("ACTUALLY CHANGED 2\n");
 	//forward_until_et(500);
-	forward(4);
+	forward(6);
 	ping();
 	//back_until_et(threshold);
 	ao();
 	motor(MOT_LEFT, -60);
 	motor(MOT_RIGHT, 60);
-	msleep(1400);
+	msleep(1600);
 	square_on_wall();
-	forward(15);
+	forward(20);
 	ao();
 	
 	int i, back_more;
 	for(i = 0; i < 2; i++) {
 
-		back_more = 0;
 		move_until_et(ET);
-		forward(6);
-		if (analog_et(ET) > ET_THRESHOLD_RIGHT + 200) {
-			
-			back_more = 1;
-		}
+		forward(11);
 
 		right(110, ks/2);
 		backward(5);
 		right_et(threshold);
 		backward(8);
-		forward(5);
-		forward_until_et(350);
-		//back_with_speed(MOT_LEFT, MOT_RIGHT, 500, 40);
-		ping();
+		forward(15);
+		//forward_until_et(350);
+ 		ping();
 		msleep(3000);
-		
-		if (back_more == 1) {
-			backward(5);
-		}
-			
-		backward(12);
+
+		backward(4);
 		/*
 		ssp(PROP_SERVO, PROP_DOWN);
 		msleep(400);
