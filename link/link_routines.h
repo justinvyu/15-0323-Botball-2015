@@ -31,38 +31,37 @@ void left_et(int threshold);
 // change if too little 
 void right_et(int threshold) {
 	clear_motor_position_counter(MOT_LEFT);
-
-	ao();
+	printf("RIGHT\n");
  	motor(MOT_LEFT, 50);
+	motor(MOT_RIGHT, -50);
 	while(analog_et(ET_TURN) <= threshold) {
-		msleep(20);
-		printf("%d\n", get_motor_position_counter(MOT_LEFT));
-		if (get_motor_position_counter(MOT_LEFT) > 100) {
-			msleep(2000);
-			left_et(threshold - 50);
+		//printf("%d\n", get_motor_position_counter(MOT_LEFT));
+		if (get_motor_position_counter(MOT_LEFT) > 400) {
+			left_et(threshold - 30);
+			return;
 		}
+		msleep(5);
 	}
-	msleep(20);
+	ao();
 	backward(8);
 	forward(5);
-	ao();
 }
 
 void left_et(int threshold) {
 	clear_motor_position_counter(MOT_RIGHT);
-	
-	ao();
+	printf("LEFT\n");
 	motor(MOT_RIGHT, 50);
 	motor(MOT_LEFT, -50);
 	while(analog_et(ET_TURN) <= threshold) {
-		printf("%d\n", get_motor_position_counter(MOT_RIGHT));
+		//printf("%d\n", get_motor_position_counter(MOT_RIGHT));
 
-		if (get_motor_position_counter(MOT_RIGHT) > 200) {
-			msleep(2000);
-			right_et(threshold - 50);
+		if (get_motor_position_counter(MOT_RIGHT) > 400) {
+			right_et(threshold - 30);
+			return;
 		}
 		msleep(5);
 	}
+	ao();
 	backward(8);
 	forward(5);
 	ao();
@@ -72,9 +71,9 @@ void servo_set(int port,int end,float time)//,float increment)
 {//position is from 0-2047
 	float increment = .01;
 	//printf("servo %d",port);
-	float curr,start = get_servo_position(port);
+	float start = get_servo_position(port);
 	float i = ((end-start)/time)*increment;
-	curr = start;
+	float curr = start;
 	if (start > end)
 	{
 		while(curr > end)
@@ -100,7 +99,7 @@ void servo_set(int port,int end,float time)//,float increment)
 
 void lift_arm() 
 {
-	servo_set(ARM_SERVO, ARM_UP, 4);
+	servo_set(ARM_SERVO, ARM_UP, 5);
 }
 
 void lower_arm()
@@ -114,11 +113,11 @@ void drive_to_pole() {
 	printf("DRIVING TO POLE\n");
 	motor(MOT_LEFT, 50);
 	motor(MOT_RIGHT, 50);
-	msleep(2000);
+	msleep(2500);
 }
 
 /**
- * 	Get a ping pong ball from any of the heights.-
+ * 	Get a ping pong ball from any of the heights.
 */
 void ping()
 {
@@ -129,19 +128,20 @@ void ping()
 	thread_start(tid);
 	motor(MOT_LEFT, -50);
 	motor(MOT_RIGHT, -50);
-	msleep(500);
+	msleep(300);
 	ao();
 	msleep(500);
 	
-	motor(MOT_LEFT, -50);
-	motor(MOT_RIGHT, -50);
-	msleep(500);
+	motor(MOT_LEFT, -40);
+	motor(MOT_RIGHT, -40);
+	msleep(300);
 	ao();
 	
 	drive_to_pole();
 	thread_destroy(tid);
-	backward(15);
+	backward(25);
 	lower_arm();
+	forward(4);
 }
 
 /**
@@ -281,34 +281,34 @@ int calibrate() {
 void collect_three_pings(int threshold) {
 	printf("ACTUALLY CHANGED 2\n");
 	//forward_until_et(500);
-	forward(5);
+	forward(4);
 	ping();
-	forward(5);
 	//back_until_et(threshold);
 	ao();
 	motor(MOT_LEFT, -60);
-	motor(MOT_RIGHT, 20);
-	msleep(2000);
+	motor(MOT_RIGHT, 60);
+	msleep(1400);
 	square_on_wall();
 	forward(15);
 	ao();
-	msleep(5000);
 	
 	int i, back_more;
 	for(i = 0; i < 2; i++) {
 
 		back_more = 0;
 		move_until_et(ET);
-		forward(4);
+		forward(6);
 		if (analog_et(ET) > ET_THRESHOLD_RIGHT + 200) {
 			
 			back_more = 1;
 		}
 
-		right(85, ks/2);
+		right(110, ks/2);
 		backward(5);
 		right_et(threshold);
-		forward_until_et(450);
+		backward(8);
+		forward(5);
+		forward_until_et(350);
 		//back_with_speed(MOT_LEFT, MOT_RIGHT, 500, 40);
 		ping();
 		msleep(3000);
@@ -318,7 +318,15 @@ void collect_three_pings(int threshold) {
 		}
 			
 		backward(12);
+		/*
+		ssp(PROP_SERVO, PROP_DOWN);
+		msleep(400);
+		*/
 		left(120, ks/2);
+		/*
+		ssp(PROP_SERVO, PROP_UP);
+		msleep(400);
+		*/
 		forward(10);
 	}
 }

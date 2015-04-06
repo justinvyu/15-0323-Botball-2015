@@ -3,12 +3,6 @@
 
 #include "link_routines.h"
 
-/*
-Checklist
-
-
-*/
-
 int main() {
 		/*
 	clear_motor_position_counter(MOT_RIGHT);
@@ -26,8 +20,13 @@ int main() {
 	initialize();
 	
 	msleep(5000);
-	right(80, ks/2);0
-	right_et(ET_CALIBRATION); //collect_three_pings(ET_CALIBRATION);
+	/*
+	move_until_et(ET_THRESHOLD_RIGHT);
+	right(80, ks/2);
+	right_et(ET_CALIBRATION); 
+	*/
+	
+	collect_three_pings(ET_CALIBRATION);
 	
 	/*
 	printf("5 seconds to position\n");
