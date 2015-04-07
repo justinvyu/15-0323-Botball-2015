@@ -124,7 +124,10 @@ void servo_set(int port,int end,float time)//,float increment)
 
 void lift_arm() 
 {
-	servo_set(ARM_SERVO, ARM_UP, 5.0);
+	servo_set(ARM_SERVO, ARM_UP, 5);
+	printf("%d\n", get_servo_position(ARM_SERVO));
+	ssp(ARM_SERVO, ARM_UP);
+	msleep(1000);
 }
 
 void lower_arm()
@@ -137,8 +140,8 @@ void drive_to_pole() {
 	// Add touch sensor stuff after Charlie is done modifying it
 	printf("DRIVING TO POLE\n");
 	motor(MOT_LEFT, 50);
-	motor(MOT_RIGHT, 50);
-	msleep(2100);
+	motor(MOT_RIGHT, 52);
+	msleep(1500);
 }
 
 /**
@@ -328,10 +331,9 @@ void collect_three_pings(int threshold) {
 	// #2
 	move_until_et(ET);
 	printf("SEE POLE");
-	forward(2);
 	right(120, ks/2);
-	backward(13);
-	forward(15);
+	backward(11);
+	forward(10);
 	ping();
 	msleep(3000);
 
@@ -342,10 +344,9 @@ void collect_three_pings(int threshold) {
 	
 	move_until_et(ET);
 	printf("SEE POLE");
-	forward(2);
-	right(115, ks/2);
-	backward(13);
-	forward(15);
+	right(120, ks/2);
+	backward(11);
+	forward(10);
 	ping();
 	backward(10);
 	left(100, ks/2);

@@ -12,7 +12,7 @@
 #define PROP_UP 1000
 #define PROP_DOWN 1900
 
-#define ARM_SERVO 3
+#define ARM_SERVO 2
 #define ARM_UP 2047
 #define ARM_DOWN 0
 
@@ -34,7 +34,7 @@
 #define ET 0
 #define ET_TURN 1
 
-#define ET_THRESHOLD_RIGHT 290 
+#define ET_THRESHOLD_RIGHT 270 
 #define ET_THRESHOLD_FRONT 370
 
 #define TOP_HAT_LEFT 2
