@@ -58,7 +58,7 @@ void right_et(int threshold) {
 	printf("past");
 	motor(MOT_LEFT, 50);
 	motor(MOT_RIGHT, -50);
-	msleep(50);
+	msleep(30);
 	ao();
 	msleep(500);
 	backward(8);
@@ -82,7 +82,7 @@ void left_et(int threshold) {
 	printf("past");
 	motor(MOT_RIGHT, 50);
 	motor(MOT_LEFT, -50);
-	msleep(50);
+	msleep(30);
 	ao();
 	msleep(500);
 	backward(8);
@@ -162,7 +162,7 @@ void ping()
 	
 	drive_to_pole();
 	thread_destroy(tid);
-	back_with_speed(MOT_LEFT, MOT_RIGHT, 2400, 50);
+	back_with_speed(MOT_LEFT, MOT_RIGHT, 1500, 50);
 	lower_arm();
 	forward(4);
 }
@@ -310,7 +310,7 @@ void collect_three_pings(int threshold) {
 	ao();
 	motor(MOT_LEFT, -60);
 	motor(MOT_RIGHT, 60);
-	msleep(1600);
+	msleep(1300);
 	square_on_wall();
 	forward(20);
 	ao();
@@ -319,9 +319,9 @@ void collect_three_pings(int threshold) {
 	for(i = 0; i < 2; i++) {
 
 		move_until_et(ET);
-		forward(11);
+		forward(15);
 
-		right(110, ks/2);
+		right(80, ks/2);
 		backward(5);
 		right_et(threshold);
 		backward(8);
@@ -335,7 +335,7 @@ void collect_three_pings(int threshold) {
 		ssp(PROP_SERVO, PROP_DOWN);
 		msleep(400);
 		*/
-		left(120, ks/2);
+		left(95, ks/2);
 		/*
 		ssp(PROP_SERVO, PROP_UP);
 		msleep(400);
