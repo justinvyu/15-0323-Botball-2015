@@ -6,9 +6,6 @@
 
 #pragma mark - Motors
 
-#define MOT_LEFT 3//Rek'sai edition!
-#define MOT_RIGHT 1
-
 #pragma mark - Servos
 
 #define PROP_SERVO 1
@@ -27,14 +24,17 @@
 #define fd_with_time(m1, m2, time) fd(m1);fd(m2);msleep(time)
 #define bk_with_time(m1, m2, time) bk(m1);bk(m2);msleep(time)
 
+#define f_with_speed(time, speed) motor(MOT_LEFT, speed);motor(MOT_RIGHT, speed);msleep(time)
+
 #pragma mark - Sensors
 
-#define TOUCH_SENSOR_LEFT 15
-#define TOUCH_SENSOR_RIGHT 16
+#define TOUCH_SENSOR_LEFT 14
+#define TOUCH_SENSOR_RIGHT 13
+
 #define ET 0
 #define ET_TURN 1
 
-#define ET_THRESHOLD_RIGHT 250 
+#define ET_THRESHOLD_RIGHT 290 
 #define ET_THRESHOLD_FRONT 370
 
 #define TOP_HAT_LEFT 2

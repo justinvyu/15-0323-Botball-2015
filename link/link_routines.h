@@ -45,8 +45,8 @@ void left_et(int threshold);
 void right_et(int threshold) {
 	clear_motor_position_counter(MOT_LEFT);
 	printf("RIGHT\n");
- 	motor(MOT_LEFT, 50);
-	motor(MOT_RIGHT, -50);
+ 	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, -60);
 	while(average_et(ET_TURN) <= threshold) {
 		//printf("%d\n", get_motor_position_counter(MOT_LEFT));
 		if (get_motor_position_counter(MOT_LEFT) > 350) {
@@ -56,20 +56,21 @@ void right_et(int threshold) {
 		msleep(5);
 	}
 	printf("past");
-	motor(MOT_LEFT, 50);
-	motor(MOT_RIGHT, -50);
-	msleep(30);
+	back_with_speed(MOT_LEFT, MOT_RIGHT, 1000, 50);
+	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, -60);
+	//msleep(30);
 	ao();
-	msleep(500);
-	backward(8);
+	msleep(2000);
+	backward(5);
 	forward(5);
 }
 
 void left_et(int threshold) {
 	clear_motor_position_counter(MOT_RIGHT);
 	printf("LEFT\n");
-	motor(MOT_RIGHT, 50);
-	motor(MOT_LEFT, -50);
+	motor(MOT_RIGHT, 60);
+	motor(MOT_LEFT, -60);
 	while(analog_et(ET_TURN) <= threshold) {
 		//printf("%d\n", get_motor_position_counter(MOT_RIGHT));
 
@@ -80,12 +81,13 @@ void left_et(int threshold) {
 		msleep(5);
 	}
 	printf("past");
-	motor(MOT_RIGHT, 50);
-	motor(MOT_LEFT, -50);
-	msleep(30);
+	back_with_speed(MOT_LEFT, MOT_RIGHT, 1000, 50);
+	motor(MOT_RIGHT, 60);
+	motor(MOT_LEFT, -60);
+	msleep(10);
 	ao();
-	msleep(500);
-	backward(8);
+	msleep(2000);
+	backward(5);
 	forward(5);
 	ao();
 }
@@ -122,7 +124,7 @@ void servo_set(int port,int end,float time)//,float increment)
 
 void lift_arm() 
 {
-	servo_set(ARM_SERVO, ARM_UP, 5);
+	servo_set(ARM_SERVO, ARM_UP, 5.0);
 }
 
 void lower_arm()
@@ -144,20 +146,20 @@ void drive_to_pole() {
 */
 void ping()
 {
-	servo_set(ARM_SERVO, floor(ARM_UP/4), 3);
+	servo_set(ARM_SERVO, floor(ARM_UP/3), 3);
 	msleep(1000);
 	thread tid;
 	tid = thread_create(lift_arm);
 	thread_start(tid);
 	motor(MOT_LEFT, -50);
 	motor(MOT_RIGHT, -50);
-	msleep(300);
+	msleep(500);
 	ao();
 	msleep(500);
 	
 	motor(MOT_LEFT, -40);
 	motor(MOT_RIGHT, -40);
-	msleep(800);
+	msleep(500);
 	ao();
 	
 	drive_to_pole();
@@ -260,9 +262,18 @@ void initialize() {
 }
 
 void square_on_wall() {
+	
 	bk(MOT_LEFT);
 	bk(MOT_RIGHT);
 	msleep(2000);
+	/*
+	while(digital(TOUCH_SENSOR_LEFT) == 0 || digital(TOUCH_SENSOR_RIGHT)) {
+		msleep(10);
+	}
+	bk(MOT_LEFT);
+	bk(MOT_RIGHT);
+	msleep(500);
+	*/
 	ao();
 }
 
@@ -302,11 +313,10 @@ int calibrate() {
 }
 
 void collect_three_pings(int threshold) {
-	printf("ACTUALLY CHANGED 2\n");
-	//forward_until_et(500);
-	forward(6);
+
+	forward(4);
 	ping();
-	//back_until_et(threshold);
+	backward(2);
 	ao();
 	motor(MOT_LEFT, -60);
 	motor(MOT_RIGHT, 60);
@@ -314,34 +324,48 @@ void collect_three_pings(int threshold) {
 	square_on_wall();
 	forward(20);
 	ao();
+		
+	// #2
+	move_until_et(ET);
+	printf("SEE POLE");
+	forward(2);
+	right(120, ks/2);
+	backward(13);
+	forward(15);
+	ping();
+	msleep(3000);
+
+	backward(10);
+	left(100, ks/2);
+	//square_on_wall();
+	forward(6);
 	
-	int i, back_more;
-	for(i = 0; i < 2; i++) {
+	move_until_et(ET);
+	printf("SEE POLE");
+	forward(2);
+	right(115, ks/2);
+	backward(13);
+	forward(15);
+	ping();
+	backward(10);
+	left(100, ks/2);
+	
+	/*
+	// #3
+	move_until_et(ET);
+	forward(2);
+	
+	right(115, ks/2);
+	backward(5);
+	right_et(threshold);
+	backward(8);
+	forward(15);
+	//forward_until_et(350);
+	ping();
+	msleep(3000);
 
-		move_until_et(ET);
-		forward(15);
-
-		right(80, ks/2);
-		backward(5);
-		right_et(threshold);
-		backward(8);
-		forward(15);
-		//forward_until_et(350);
- 		ping();
-		msleep(3000);
-
-		backward(4);
-		/*
-		ssp(PROP_SERVO, PROP_DOWN);
-		msleep(400);
-		*/
-		left(95, ks/2);
-		/*
-		ssp(PROP_SERVO, PROP_UP);
-		msleep(400);
-		*/
-		forward(10);
-	}
+	backward(10);
+	*/
 }
 
 #endif
