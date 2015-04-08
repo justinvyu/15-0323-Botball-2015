@@ -65,8 +65,10 @@ void drive_to_pole() {
 */
 void ping()
 {
-	servo_set(ARM_SERVO, floor(ARM_UP/3), 3);
-	msleep(1000);
+	//backward(2);
+	servo_set(ARM_SERVO, floor(ARM_UP/3), 2);
+	//ssp(ARM_SERVO, floor(ARM_UP/3));
+	msleep(300);
 	thread tid;
 	tid = thread_create(lift_arm);
 	thread_start(tid);
@@ -182,11 +184,11 @@ void initialize() {
 	ssp(PROP_SERVO, PROP_UP);
 }
 
-void square_on_wall() {
+void square_on_wall(int time) {
 	
 	bk(MOT_LEFT);
 	bk(MOT_RIGHT);
-	msleep(3000);
+	msleep(time);
 	ao();
 }
 
@@ -215,7 +217,7 @@ void collect_three_pings(int threshold) {
 	motor(MOT_LEFT, -60);
 	motor(MOT_RIGHT, 60);
 	msleep(1300);
-	square_on_wall();
+	square_on_wall(1000);
 	forward(20);
 	ao();
 		
@@ -229,7 +231,7 @@ void collect_three_pings(int threshold) {
 	ping();
 
 	backward(11);
-	left(95, ks/2);
+	left(105, ks/2);
 	//square_on_wall();
 	forward(6);
 	
@@ -238,20 +240,20 @@ void collect_three_pings(int threshold) {
 	backward(2);
 	printf("SEE POLE");
 	right(115, ks/2);
-	backward(11);
-	forward(10);
+	backward(15);
+	forward(14);
 	ping();
 	backward(11);
 	
 	// Move across middle
-	left(100, ks/2);
+	left(105, ks/2);
 	forward(40);
 	msleep(1000);
-	forward(40);
-	left(115, ks/2);
-	square_on_wall();
+	forward(36);
+	left(110, ks/2);
+	square_on_wall(3000);
 	forward(15);
-	right(115, ks/2);
+	right(110, ks/2);
 	
 	// #4
 	move_until_et(ET);
@@ -267,10 +269,10 @@ void collect_three_pings(int threshold) {
 	move_until_et(ET);
 	backward(2);
 	right(120, ks/2);
-	backward(14);
-	forward(10);
+	backward(19);
+	forward(15);
 	ping();
-	backward(11);
+	backward(14);
 	left(100, ks/2);
 	
 	// #6
@@ -278,14 +280,14 @@ void collect_three_pings(int threshold) {
 	move_until_et(ET);
 	backward(4);
 	right(115, ks/2);
-	backward(11);
-	forward(10);
+	backward(15);
+	forward(14);
 	ping();
 
 	motor(MOT_RIGHT, -80);
 	msleep(2500);
 	ao();
-	square_on_wall();
+	square_on_wall(1000);
 	forward(15);
 	left(120, ks/2);
 	backward(5);

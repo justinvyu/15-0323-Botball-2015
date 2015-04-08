@@ -2,39 +2,48 @@
 
 #include "create_routines.h"
 
+#pragma mark - Motors
+
+
 #define cm(num) 10*num
 #define inch(num) 25.4*num
+#define firsttribbleradius 10
+#define turntime 2.5
 
-void initialize() {
-	enable_servo(GATE_SERVO);
-}
 
-int main() {
+
+
+int main()
+{
 	create_connect();
-
-	lift_arm();
-
+	
+	
+	create_full();
+	get_cube();
+	create_drive_direct(65,160);
+	msleep(5000);
+	create_drive_direct(120,70);
+	msleep(2300);
+	create_drive_direct(180,180);
+	msleep(6400);
+	//end to end
+	create_drive_direct(95,-95);
+	msleep(4100);
+	/*create_drive_direct(80,80);
+	msleep(1500);
+	create_drive_direct(95,-95);
+	msleep(2000);*/
+	create_stop();
+	fancy_turn();
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	create_disconnect();
-	// create_connect();
-	
-	// enable_servo(GATE_SERVO);
-	// ssp(GATE_SERVO, GATE_OPEN);
-	// get_first_tribble_pile();
-		
-	// create_right(10, 20, 300);
-	
-	// ssp(GATE_SERVO, GATE_CLOSED);
-	// msleep(1000);
-	
-	// while(get_create_lbump() || get_create_rbump()) {
-	// 	create_drive_direct(250, 0);
-	// 	msleep(5);
-	// }
-		
-	// create_forward(cm(90), 300);
-	// printf("after");
-	// ssp(GATE_SERVO, GATE_OPEN);
-	// msleep(1000);
-		
-	// create_disconnect();
+	return 0;
 }
