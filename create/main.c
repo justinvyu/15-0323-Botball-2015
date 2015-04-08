@@ -2,21 +2,15 @@
 
 #include "create_routines.h"
 
-#pragma mark - Motors
-
-
 #define cm(num) 10*num
 #define inch(num) 25.4*num
 #define firsttribbleradius 10
 #define turntime 2.5
 
 
-
-
 int main()
 {
 	create_connect();
-	
 	
 	create_full();
 	get_cube();
@@ -35,14 +29,6 @@ int main()
 	msleep(2000);*/
 	create_stop();
 	fancy_turn();
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	create_disconnect();
 	return 0;
