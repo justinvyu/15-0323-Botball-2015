@@ -32,7 +32,7 @@
 #define ET 0
 #define ET_TURN 1
 
-#define ET_THRESHOLD_RIGHT 295 
+#define ET_THRESHOLD_RIGHT 285 
 #define ET_THRESHOLD_FRONT 370
 
 #define TOP_HAT_LEFT 2

@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "drive.h"
 #include "ET.h"
+#include "generic.h"
 
 // Replace FILE with your file's name
 #ifndef _LINK_ROUTINES_H_
@@ -9,36 +10,6 @@
 
 //SERVOS
 //servo_off(int) is replaced with the KIPR library function disable_servo(int)
-
-void servo_set(int port,int end,float time)//,float increment)
-{//position is from 0-2047
-	float increment = .01;
-	//printf("servo %d",port);
-	float start = get_servo_position(port);
-	float i = ((end-start)/time)*increment;
-	float curr = start;
-	if (start > end)
-	{
-		while(curr > end)
-		{
-			//printf("%f\n",curr);
-			set_servo_position(port,curr);
-			curr+=i;
-			msleep((long)(increment*1000));
-		}
-	}
-	else if (start < end)
-	{
-		while(curr < end)
-		{
-			//printf("%f\n",curr);
-			set_servo_position(port,curr);
-			curr+=i;
-			msleep((long)(increment*1000));
-		}
-	}
-	set_servo_position(port,end);
-}
 
 void lift_arm() 
 {
@@ -213,31 +184,32 @@ void collect_three_pings(int threshold) {
 
 	forward(4);
 	ping();
+	backward(2);
 	ao();
 	motor(MOT_LEFT, -60);
 	motor(MOT_RIGHT, 60);
-	msleep(1300);
+	msleep(1200);
 	square_on_wall(1000);
 	forward(20);
 	ao();
 		
 	// #2
 	move_until_et(ET);
-	backward(2);
+	forward(2);
 	printf("SEE POLE");
 	right(110, ks/2);
 	backward(12);
 	forward(10);
 	ping();
 
-	backward(11);
-	left(105, ks/2);
+	backward(8);
+	left(100, ks/2);
 	//square_on_wall();
-	forward(6);
+	forward(15);
 	
 	// #3
 	move_until_et(ET);
-	backward(2);
+	//backward(2);
 	printf("SEE POLE");
 	right(115, ks/2);
 	backward(15);
@@ -251,29 +223,30 @@ void collect_three_pings(int threshold) {
 	msleep(1000);
 	forward(36);
 	left(110, ks/2);
-	square_on_wall(3000);
+	square_on_wall(3500);
 	forward(15);
-	right(110, ks/2);
+	right(120, ks/2);
+	backward(3);
 	
 	// #4
 	move_until_et(ET);
-	right(120, ks/2);
-	backward(11);
+	right(118, ks/2);
+	backward(13);
 	forward(10);
 	ping();
-	backward(14);
-	left(100, ks/2);
+	backward(12);
+	left(95, ks/2);
 	
 	// #5
 	forward(10);
 	move_until_et(ET);
 	backward(2);
 	right(120, ks/2);
-	backward(19);
+	backward(16);
 	forward(15);
 	ping();
-	backward(14);
-	left(100, ks/2);
+	backward(12);
+	left(95, ks/2);
 	
 	// #6
 	forward(10);
@@ -291,6 +264,8 @@ void collect_three_pings(int threshold) {
 	forward(15);
 	left(120, ks/2);
 	backward(5);
+	
+	now();
 }
 
 #endif

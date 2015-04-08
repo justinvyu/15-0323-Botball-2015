@@ -11,11 +11,11 @@
  */
 int average_et(int et) {
 	int i, sum = 0;
-	for(i = 0; i < 3; i++) {
+	for(i = 0; i < 5; i++) {
 		sum += analog_et(et);
 		msleep(5);
 	}
-	int average = floor(sum/3);
+	int average = floor(sum/5);
 	printf("%d\n", average);
 	return average;
 }
