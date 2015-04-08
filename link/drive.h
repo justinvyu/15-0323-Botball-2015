@@ -16,8 +16,8 @@
 #define SPDl 60.//left forward
 #define SPDr 62.//right forward
 #define rdistmult 1.0
-#define SPDlb 100.//left backward
-#define SPDrb 100.//right backward
+#define SPDlb 60.//left backward
+#define SPDrb 62.//right backward
 #define rdistmultb (SPDrb/SPDlb)
 #define wheeldiameter 5.5 //Unique to each robot
 #define ks 14.2 //Unique to each robot
