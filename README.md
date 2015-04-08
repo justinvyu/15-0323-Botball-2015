@@ -1,6 +1,5 @@
 # 15-0323-Botball-2015
 
-# Major Issues
-
+Issues:
 - Add a timeout to the ET turning / moving
-- (maybe) average ET values
+- Make the backward larger after getting a ping, then go forward to account for this increased dist.
