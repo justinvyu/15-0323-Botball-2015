@@ -4,8 +4,6 @@
 #ifndef _CONSTANTS_H_
 #define _CONSTANTS_H_
 
-#pragma mark - Motors
-
 #pragma mark - Servos
 
 #define PROP_SERVO 1
