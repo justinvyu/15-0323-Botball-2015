@@ -13,7 +13,7 @@
 
 void lift_arm() 
 {
-	servo_set(ARM_SERVO, ARM_UP, 4);
+	servo_set(ARM_SERVO, ARM_UP, 3.5);
 }
 
 void lower_arm()
@@ -25,9 +25,9 @@ void lower_arm()
 void drive_to_pole() {
 	// Add touch sensor stuff after Charlie is done modifying it
 	printf("DRIVING TO POLE\n");
-	motor(MOT_LEFT, 50);
-	motor(MOT_RIGHT, 52);
-	msleep(1500);
+	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, 62);
+	msleep(1300);
 	ao();
 }
 
@@ -47,7 +47,7 @@ void ping()
 	motor(MOT_RIGHT, -50);
 	msleep(500);
 	ao();
-	msleep(500);
+	msleep(100);
 	
 	motor(MOT_LEFT, -40);
 	motor(MOT_RIGHT, -40);
@@ -58,9 +58,9 @@ void ping()
 	thread_wait(tid);
 	thread_destroy(tid);
 	//back_with_speed(MOT_LEFT, MOT_RIGHT, 1500, 50);
-	backward(12);
+	backward(16);
 	lower_arm();
-	forward(4);
+	forward(7);
 }
 
 /**
@@ -69,10 +69,10 @@ void ping()
 void tunnel()
 {
 	ssp(PROP_SERVO, PROP_UP);
-	msleep(500);
+	msleep(300);
 	fd_with_time(MOT_LEFT, MOT_RIGHT, 2000);
 	ssp(PROP_SERVO, PROP_DOWN);
-	msleep(500);
+	msleep(300);
 	fd_with_time(MOT_LEFT, MOT_RIGHT, 2000);
 	ao();
 	ssp(PROP_SERVO, PROP_DOWN);
@@ -82,9 +82,9 @@ void tunnel()
 	forward_with_speed(MOT_LEFT, MOT_RIGHT, 500, 60);
 	ao();
 	ssp(PROP_SERVO, PROP_DOWN);
-	msleep(500);
+	msleep(300);
 	ssp(PROP_SERVO, PROP_UP);
-	msleep(500);
+	msleep(300);
 }
 
 /**
@@ -180,89 +180,88 @@ int calibrate() {
 	return average;
 }
 
-void collect_three_pings(int threshold) {
-
+void collect_pings() {
+	start();
 	forward(4);
 	ping();
 	backward(2);
 	ao();
-	motor(MOT_LEFT, -60);
-	motor(MOT_RIGHT, 60);
-	msleep(1200);
-	square_on_wall(1000);
-	forward(20);
-	ao();
+	motor(MOT_LEFT, -95);
+	motor(MOT_RIGHT, 95);
+	msleep(700);
+	square_on_wall(800);
+	forward(28);
 		
 	// #2
 	move_until_et(ET);
-	forward(2);
 	printf("SEE POLE");
-	right(110, ks/2);
-	backward(12);
-	forward(10);
+	right(122, ks/2);
+	backward(15);
+	forward(12);
 	ping();
 
-	backward(8);
-	left(100, ks/2);
+	backward(12);
+	left(97, ks/2);
 	//square_on_wall();
 	forward(15);
 	
 	// #3
 	move_until_et(ET);
-	//backward(2);
+	//forward(2);
 	printf("SEE POLE");
-	right(115, ks/2);
-	backward(15);
-	forward(14);
+	right(125, ks/2);
+	backward(17);
+	forward(11);
 	ping();
-	backward(11);
+	backward(14);
 	
 	// Move across middle
-	left(105, ks/2);
+	left(93, ks/2);
 	forward(40);
-	msleep(1000);
+	//right(4, 0);
 	forward(36);
-	left(110, ks/2);
-	square_on_wall(3500);
-	forward(15);
-	right(120, ks/2);
+	left(105, ks/2);
+	square_on_wall(4000);
+	forward(22);
+	right(122, ks/2);
 	backward(3);
 	
 	// #4
 	move_until_et(ET);
-	right(118, ks/2);
-	backward(13);
-	forward(10);
+	right(120, ks/2);
+	backward(15);
+	forward(11);
 	ping();
 	backward(12);
 	left(95, ks/2);
 	
 	// #5
-	forward(10);
+	forward(14);
 	move_until_et(ET);
-	backward(2);
-	right(120, ks/2);
-	backward(16);
-	forward(15);
+	//backward(2);
+	right(126, ks/2);
+	backward(15);
+	forward(13);
 	ping();
-	backward(12);
-	left(95, ks/2);
+	backward(16);
+	left(100, ks/2);
 	
 	// #6
-	forward(10);
-	move_until_et(ET);
-	backward(4);
-	right(115, ks/2);
-	backward(15);
 	forward(14);
+	move_until_et(ET);
+	backward(2);
+	right(117, ks/2);
+	backward(15);
+	forward(12);
 	ping();
 
-	motor(MOT_RIGHT, -80);
-	msleep(2500);
+	backward(10);
+	motor(MOT_RIGHT, -100);
+	msleep(1500);
 	ao();
 	square_on_wall(1000);
 	forward(15);
-	left(120, ks/2);
+	left(125, ks/2);
 	backward(5);
 	
 	now();
