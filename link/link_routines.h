@@ -14,6 +14,7 @@
 void lift_arm() 
 {
 	servo_set(ARM_SERVO, ARM_UP, 3.5);
+	msleep(500);
 }
 
 void lower_arm()
@@ -26,8 +27,8 @@ void drive_to_pole() {
 	// Add touch sensor stuff after Charlie is done modifying it
 	printf("DRIVING TO POLE\n");
 	motor(MOT_LEFT, 60);
-	motor(MOT_RIGHT, 62);
-	msleep(1300);
+	motor(MOT_RIGHT, 60);
+	msleep(1500);
 	ao();
 }
 
@@ -36,7 +37,79 @@ void drive_to_pole() {
 */
 void ping()
 {
-	//backward(2);
+	backward(2);
+	servo_set(ARM_SERVO, floor(ARM_UP/3), 2);
+	//ssp(ARM_SERVO, floor(ARM_UP/3));
+	msleep(300);
+	thread tid;
+	tid = thread_create(lift_arm);
+	thread_start(tid);
+	motor(MOT_LEFT, 60);
+	motor(MOT_RIGHT, 60);
+	msleep(800);
+	ao();
+	msleep(1500);
+	//backward(9);
+	
+	//motor(MOT_LEFT, -50);
+	//motor(MOT_RIGHT, -52);
+	//msleep(900);
+	//ao();
+	
+	//drive_to_pole();
+	//forward(12);
+	
+	thread_wait(tid);
+	thread_destroy(tid);
+	//back_with_speed(MOT_LEFT, MOT_RIGHT, 1500, 50);
+	backward(15);
+	lower_arm();
+	forward(7);
+}
+
+void low_ping() {
+	backward(2);
+	servo_set(ARM_SERVO, ARM_UP, 3);
+	msleep(800);
+	backward(8);
+	lower_arm();
+	forward(4);
+}
+
+void medium_ping() {
+	servo_set(ARM_SERVO, floor(ARM_UP/4), 2);
+	//ssp(ARM_SERVO, floor(ARM_UP/3));
+	msleep(300);
+	thread tid;
+	tid = thread_create(lift_arm);
+	thread_start(tid);
+	motor(MOT_LEFT, -50);
+	motor(MOT_RIGHT, -50);
+	msleep(800);
+	ao();
+	motor(MOT_LEFT, 50);
+	motor(MOT_RIGHT, 50);
+	msleep(800);
+	ao();
+	//backward(9);
+	
+	//motor(MOT_LEFT, -50);
+	//motor(MOT_RIGHT, -52);
+	//msleep(900);
+	//ao();
+	
+	//drive_to_pole();
+	//forward(12);
+	
+	thread_wait(tid);
+	thread_destroy(tid);
+	//back_with_speed(MOT_LEFT, MOT_RIGHT, 1500, 50);
+	backward(12);
+	lower_arm();
+	forward(8);
+}
+
+void high_ping() {
 	servo_set(ARM_SERVO, floor(ARM_UP/3), 2);
 	//ssp(ARM_SERVO, floor(ARM_UP/3));
 	msleep(300);
@@ -45,20 +118,19 @@ void ping()
 	thread_start(tid);
 	motor(MOT_LEFT, -50);
 	motor(MOT_RIGHT, -50);
-	msleep(500);
+	msleep(900);
 	ao();
-	msleep(100);
-	
-	motor(MOT_LEFT, -40);
-	motor(MOT_RIGHT, -40);
-	msleep(500);
+	motor(MOT_LEFT, 50);
+	motor(MOT_RIGHT, 50);
+	msleep(1400);
 	ao();
+	msleep(1000);
+	//backward(9);
 	
-	drive_to_pole();
 	thread_wait(tid);
 	thread_destroy(tid);
 	//back_with_speed(MOT_LEFT, MOT_RIGHT, 1500, 50);
-	backward(16);
+	backward(14);
 	lower_arm();
 	forward(7);
 }
@@ -182,87 +254,97 @@ int calibrate() {
 
 void collect_pings() {
 	start();
-	forward(4);
-	ping();
-	backward(2);
+	forward(6);
+	//ping();
+	low_ping();
+	forward(1);
 	ao();
 	motor(MOT_LEFT, -95);
 	motor(MOT_RIGHT, 95);
-	msleep(700);
-	square_on_wall(800);
-	forward(28);
+	msleep(800);
+	square_on_wall(1000);
+	forward(30);
 		
 	// #2
 	move_until_et(ET);
+	//forward(1);
 	printf("SEE POLE");
 	right(122, ks/2);
 	backward(15);
-	forward(12);
-	ping();
+	forward(13);
+	//ping();
+	medium_ping();
 
 	backward(12);
-	left(97, ks/2);
+	left(105, ks/2);
 	//square_on_wall();
 	forward(15);
 	
 	// #3
 	move_until_et(ET);
-	//forward(2);
+	backward(2);
 	printf("SEE POLE");
-	right(125, ks/2);
-	backward(17);
-	forward(11);
-	ping();
+	right(120, ks/2);
+	backward(14);
+	forward(13);
+	//ping();
+	high_ping();
 	backward(14);
 	
 	// Move across middle
-	left(93, ks/2);
+	left(97, ks/2);
 	forward(40);
 	//right(4, 0);
-	forward(36);
-	left(105, ks/2);
-	square_on_wall(4000);
-	forward(22);
-	right(122, ks/2);
-	backward(3);
+	forward(40);
+	left(110, ks/2);
+	square_on_wall(3500);
+	forward(17);
+	right(120, ks/2);
+	backward(5);
 	
 	// #4
 	move_until_et(ET);
-	right(120, ks/2);
-	backward(15);
-	forward(11);
-	ping();
-	backward(12);
-	left(95, ks/2);
+	backward(2);
+	right(110, ks/2);
+	backward(17);
+	forward(13);
+	//ping();
+	low_ping();
+	backward(10);
+	left(98, ks/2);
 	
 	// #5
-	forward(14);
+	forward(15);
 	move_until_et(ET);
 	//backward(2);
 	right(126, ks/2);
-	backward(15);
-	forward(13);
-	ping();
-	backward(16);
-	left(100, ks/2);
+	backward(17);
+	forward(14);
+	//ping();
+	medium_ping();
+	backward(10);
+	left(98, ks/2);
 	
 	// #6
 	forward(14);
 	move_until_et(ET);
 	backward(2);
-	right(117, ks/2);
-	backward(15);
-	forward(12);
-	ping();
-
-	backward(10);
+	right(110, ks/2);
+	backward(17);
+	forward(17);
+	//ping();
+	high_ping();
+	
+	backward(8);
+	/*
 	motor(MOT_RIGHT, -100);
-	msleep(1500);
+	msleep(1700);
 	ao();
 	square_on_wall(1000);
 	forward(15);
 	left(125, ks/2);
 	backward(5);
+	*/
 	
 	now();
 }

@@ -13,11 +13,11 @@
 #define PI 3.14159265358979
 
 #define SPD 100//turning
-#define SPDl 90.//left forward
-#define SPDr 90.//right forward
+#define SPDl 95.//left forward
+#define SPDr 82.//right forward
 #define rdistmult 1.0
-#define SPDlb 92.//left backward
-#define SPDrb 90.//right backward
+#define SPDlb 95.//left backward
+#define SPDrb 82.//right backward
 #define rdistmultb (SPDrb/SPDlb)
 #define wheeldiameter 5.5 //Unique to each robot
 #define ks 14.2 //Unique to each robot

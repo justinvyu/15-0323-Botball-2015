@@ -26,7 +26,7 @@ int average_et(int et) {
  */
 void move_until_et(int et_port)
 {
-	motor(MOT_LEFT, 60);
+	motor(MOT_LEFT, 70);
 	motor(MOT_RIGHT, 60);
 	while(1)
 	{
