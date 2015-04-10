@@ -69,8 +69,8 @@ void ping()
 
 void low_ping() {
 	backward(2);
-	servo_set(ARM_SERVO, ARM_UP, 3);
-	msleep(800);
+	servo_set(ARM_SERVO, ARM_UP, 3.5);
+	msleep(600);
 	backward(8);
 	lower_arm();
 	forward(4);
@@ -275,7 +275,7 @@ void collect_pings() {
 	//ping();
 	medium_ping();
 
-	backward(12);
+	backward(11);
 	left(105, ks/2);
 	//square_on_wall();
 	forward(15);
