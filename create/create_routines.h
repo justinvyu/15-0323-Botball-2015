@@ -2,6 +2,7 @@
 
 #include "constants.h"
 #include "create_drive.h"
+#include "generic.h"
 # define shifttime 500
 
 // Replace FILE with your file's name
@@ -12,7 +13,7 @@
 #define firstleftspeed 30
 #define firstdist 250
 
-void servo_set(int port,int end,float time)//,float increment)
+/*void servo_set(int port,int end,float time)//,float increment)
 {//position is from 0-2047
 	float increment = .01;
 	//printf("servo %d",port);
@@ -40,7 +41,7 @@ void servo_set(int port,int end,float time)//,float increment)
 		}
 	}
 	set_servo_position(port,end);
-}
+}*/
 
 void get_first_tribble_pile()
 {   
@@ -72,7 +73,7 @@ void get_second_tribble_pile()
 }
 
 void lift_arm() {
-	motor(ARM_MOTOR, 90);
+	motor(ARM_MOTOR, 100);
 	while(digital(ARM_STOP_TOUCH_SENSOR) == 0) {
 		msleep(50);
 	}
@@ -80,8 +81,46 @@ void lift_arm() {
 }
 
 void lower_arm(){
-	motor(ARM_MOTOR, -90);
-	msleep(6600);
+	motor(ARM_MOTOR, -100);
+	msleep(5000);
+	
+	off(ARM_MOTOR);
+	
+}
+
+void lift_arm_mid(){
+	motor(ARM_MOTOR, 100);
+	msleep(5100);
+	
+	off(ARM_MOTOR);
+	
+}
+
+void lower_arm_mid(){
+	motor(ARM_MOTOR, -100);
+	msleep(3750);
+	
+	off(ARM_MOTOR);
+	
+}
+
+void lower_arm_small(){
+	motor(ARM_MOTOR, -100);
+	msleep(900);
+	
+	off(ARM_MOTOR);
+}
+
+void lower_arm_tiny(){
+	motor(ARM_MOTOR, -100);
+	msleep(795);
+	
+	off(ARM_MOTOR);
+}
+
+void lift_arm_tiny(){
+	motor(ARM_MOTOR, 100);
+	msleep(400);
 	
 	off(ARM_MOTOR);
 	
@@ -109,27 +148,27 @@ void sweep(){
 }
 
 void get_cube(){
-	lift_arm();
+	lift_arm_mid();
 	enable_servo(GATE_SERVO);
 	ssp(GATE_SERVO, GATE_OPEN);
-	msleep(2000);
+	msleep(500);
 	ao();
-	create_drive_direct(0,80);
-	msleep(3000);
+	create_drive_direct(-80,80);
+	msleep(1500);
 	create_stop();
-	lower_arm();
+	lower_arm_mid();
 	ao();
-	create_drive_direct(0,-80);
-	msleep(2800);
+//	msleep(6000);
+	create_drive_direct(80,-80);
+	msleep(1400);
 	create_stop();
 	ssp(GATE_SERVO, GATE_CLOSED);
-	msleep(2000);
+	msleep(500);
 	ao();	
 }
 
 void set_cube(){
-	create_drive_dire
-	ct(100,200);
+	create_drive_direct(100,200);
 	msleep(shifttime);
 	create_drive_direct(-100,-200);
 	msleep(shifttime);
@@ -159,6 +198,18 @@ void fancy_turn(){
 	msleep(shifttime);
 	
 	create_block();
+}
+
+void calibrate() {
+	lift_arm();
+	lower_arm();
+}
+
+void forwardUntilBump(){
+	create_drive_direct(160,160);
+	while(get_create_rbump==0 || get_create_lbump==0){
+		msleep(50);
+	}
 }
 
 #endif
