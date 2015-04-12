@@ -16,7 +16,7 @@ int average_et(int et) {
 		msleep(5);
 	}
 	int average = floor(sum/5);
-	printf("%d\n", average);
+	//printf("%d\n", average);
 	return average;
 }
 
@@ -26,15 +26,15 @@ int average_et(int et) {
  */
 void move_until_et(int et_port)
 {
-	motor(MOT_LEFT, 70);
-	motor(MOT_RIGHT, 60);
+	motor(MOT_LEFT, 85);
+	motor(MOT_RIGHT, 80);
 	while(1)
 	{
 		if(average_et(et_port) >= ET_THRESHOLD_RIGHT)
 		{
 			break;
 		}
-		printf("%d\n", analog_et(et_port));
+		//printf("%d\n", analog_et(et_port));
 		msleep(5);
 	}
 	ao();

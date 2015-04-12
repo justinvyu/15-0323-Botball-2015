@@ -6,13 +6,7 @@
 int main() {
 	initialize();
 	// wait_for_light(LIGHT_SEN);
+	printf("POSITION BY PLACING THE MIDDLE OF A RULER AT THE EDGE OF THE PVC, THEN GOING 9 INCHES. THEN, USE THE METAL BARRIER AND PLACE THE WHEEL GUARD PARALLEL TO THE BARRIER. THE ROBOT SHOULD BE BARELY IN BOUNDS (AND A LITTLE RIGHT OF THE FIRST POLE).\n");
 	shut_down_in(119);
-	/*forward(30);
-	msleep(2000);
-	backward(30);
-	msleep(2000);
-	right(120, ks/2);
-	left(120, ks/2);
-	*/
 	collect_pings();
 }
