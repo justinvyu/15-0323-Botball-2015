@@ -13,7 +13,7 @@
 
 void lift_arm() 
 {
-	servo_set(ARM_SERVO, ARM_UP, 3.5);
+	servo_set(ARM_SERVO, ARM_UP, 2.5);
 	msleep(500);
 }
 
@@ -91,11 +91,11 @@ void medium_ping() {
 	thread tid;
 	tid = thread_create(lift_arm);
 	thread_start(tid);
-	motor(MOT_LEFT, -52);
+	motor(MOT_LEFT, -50);
 	motor(MOT_RIGHT, -50);
 	msleep(800);
 	ao();
-	motor(MOT_LEFT, 65);
+	motor(MOT_LEFT, 60);
 	motor(MOT_RIGHT, 60);
 	msleep(800);
 	ao();
@@ -117,7 +117,7 @@ void high_ping() {
 	tid = thread_create(lift_arm);
 	thread_start(tid);
 
-	motor(MOT_LEFT, 65);
+	motor(MOT_LEFT, 60);
 	motor(MOT_RIGHT, 60);
 	msleep(2000);
 	ao();
@@ -158,8 +158,6 @@ void high_ping_last() {
 	thread_destroy(tid);
 	//backward(9);
 	
-	thread_wait(tid);
-	thread_destroy(tid);
 	printf("!@#@#@!#@#!# "); now();
 }
 
@@ -257,7 +255,7 @@ void initialize() {
 
 void square_on_wall(int time) {
 	
-	motor(MOT_LEFT, -95);
+	bk(MOT_LEFT);
 	bk(MOT_RIGHT);
 	msleep(time);
 	ao();
@@ -284,14 +282,15 @@ void collect_pings() {
 	start();
 	forward(5);
 	low_ping_first();
-	forward(18);
-	//msleep(10500);
-	backward(18);
-	motor(MOT_LEFT, -95);
-	motor(MOT_RIGHT, 95);
-	msleep(800);
+	right(4, 0);
+	forward(20);
+	msleep(10500);
+	backward(15);
+	motor(MOT_LEFT, -85);
+	motor(MOT_RIGHT, 85);
+	msleep(950);
 	square_on_wall(2000);
-	//msleep(4000);
+	msleep(4000);
 	forward(30);
 	printf("1: ");now();
 
@@ -304,8 +303,8 @@ void collect_pings() {
 	medium_ping();
 
 	backward(9);
-	left(95, ks/2);
-	forward(13);
+	left(93, ks/2);
+	forward(14);
 	printf("2: ");now();
 	
 	// #3
@@ -322,7 +321,7 @@ void collect_pings() {
 	left(90, ks/2);
 	forward(80);
 	left(110, ks/2);
-	square_on_wall(3200);
+	square_on_wall(2500);
 	forward(17);
 	right(118, ks/2);
 	backward(5);
@@ -331,12 +330,12 @@ void collect_pings() {
 	// #4
 	move_until_et(ET);
 	backward(2);
-	right(122, ks/2);
+	right(120, ks/2);
 	backward(18);
-	forward(13);
+	forward(12);
 	low_ping();
 	backward(11);
-	left(105, ks/2);
+	left(95, ks/2);
 	printf("4: ");now();
 	
 	// #5
@@ -344,27 +343,26 @@ void collect_pings() {
 	move_until_et(ET);
 	backward(1);
 	right(126, ks/2);
-	backward(17);
-	forward(12);
+	backward(19);
+	forward(13);
 	medium_ping();
-	backward(10);
-	left(110, ks/2);
+	backward(12);
+	left(107, ks/2);
 	printf("5: ");now();
 	
 	// #6
 	forward(12);
 	move_until_et(ET);
-	backward(10);
-	right(105, ks/2);
-	printf("@!#!#!@#!#!@#"); now();
+	backward(15);
+	right(92, ks/2);
 	backward(17);
 	forward(18);
 	high_ping_last();
+	msleep(4000);
 	printf("6: ");now();
-	
-	backward(10);
-	left(20, ks/2);
-	printf("end: ");now();
+
+	backward(15);
+	now();
 }
 
 #endif
