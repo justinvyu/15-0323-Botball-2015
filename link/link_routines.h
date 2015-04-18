@@ -285,25 +285,25 @@ void collect_pings() {
 	forward(5);
 	low_ping_first();
 	forward(18);
-	msleep(10500);
-	backward(12);
+	//msleep(10500);
+	backward(18);
 	motor(MOT_LEFT, -95);
 	motor(MOT_RIGHT, 95);
-	msleep(900);
+	msleep(800);
 	square_on_wall(2000);
-	msleep(4000);
+	//msleep(4000);
 	forward(30);
 	printf("1: ");now();
 
 	// #2
 	move_until_et(ET);
 	backward(2);
-	right(126, ks/2);
-	backward(20);
+	right(128, ks/2);
+	backward(25);
 	forward(15);
 	medium_ping();
 
-	backward(10);
+	backward(9);
 	left(95, ks/2);
 	forward(13);
 	printf("2: ");now();
@@ -332,7 +332,7 @@ void collect_pings() {
 	move_until_et(ET);
 	backward(2);
 	right(122, ks/2);
-	backward(16);
+	backward(18);
 	forward(13);
 	low_ping();
 	backward(11);
@@ -355,7 +355,7 @@ void collect_pings() {
 	forward(12);
 	move_until_et(ET);
 	backward(10);
-	right(95, ks/2);
+	right(105, ks/2);
 	printf("@!#!#!@#!#!@#"); now();
 	backward(17);
 	forward(18);
